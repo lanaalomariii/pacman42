@@ -1,5 +1,6 @@
 from mazegenerator import MazeGenerator
 
+
 NORTH = 1
 EAST = 2
 SOUTH = 4
@@ -11,34 +12,39 @@ DIRECTIONS = {"N": (NORTH, 0, -1),
               "S": (SOUTH, 0, 1),
               "W": (WEST, -1, 0)}
 
+
 class MazeError(Exception):
 
     pass
 
+
 class Maze:
-    def __init__(self, size: tuple[int, int], seed:int, perfect: bool = False) -> None:
+    def __init__(self, size: tuple[int, int], seed: int, perfect: bool = False
+                 ) -> None:
         width, height = size
-        if width <=0  or height <= 0:
+        if width <= 0 or height <= 0:
             raise ValueError("width and height must be positve")
         self.width = width
         self.height = height
         self.seed = seed
         self.perfect = perfect
         self.generate()
-    def generate(self) -> None: 
+
+    def generate(self) -> None:
         try:
-            self.generator = MazeGenerator(size=(self.width, self.height), perfect=self.perfect, seed= self.seed)
+            self.generator = MazeGenerator(
+                    size=(self.width, self.height),
+                    perfect=self.perfect, seed=self.seed
+                    )
 
         except Exception:
-            raise MazeError(f"Maze generation failed")
+            raise MazeError("Maze generation failed")
 
         self.grid = self.generator.maze
         self.entry = self.generator.maze_entry
-        self.exit =  self.generator.maze_exit
+        self.exit = self.generator.maze_exit
 
-
-
-    def can_move(self, x: int, y: int, direction:str) -> bool:
+    def can_move(self, x: int, y: int, direction: str) -> bool:
         wall, dx, dy = DIRECTIONS[direction]
         cell = self.grid[y][x]
         if cell & wall:
@@ -52,6 +58,7 @@ class Maze:
         if self.is_blocked(new_x, new_y):
             return False
         return True
+
     def get_neighbors(self, x: int, y: int) -> list[tuple[int, int]]:
         """Return passable neighbors of a cell.
 
@@ -67,15 +74,6 @@ class Maze:
             if self.can_move(x, y, direction):
                 result.append((new_x, new_y))
         return result
+
     def is_blocked(self, x: int, y: int) -> bool:
         return self.grid[y][x] == ALL
-
-if __name__ == "__main__":
-    maze = Maze((15, 15), 42)
-
-    print("Entry:", maze.entry)
-    print("Exit:", maze.exit)
-
-    print("Neighbors:", maze.get_neighbors(1, 1))
-
-    print("Blocked:", maze.is_blocked(1, 1))
