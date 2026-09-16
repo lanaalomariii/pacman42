@@ -14,16 +14,24 @@ DIRECTIONS = {"N": (NORTH, 0, -1),
 
 
 class MazeError(Exception):
-
+    """Raised when maze generation fails"""
     pass
 
 
 class Maze:
+    """Adapter around the A-Maze-ing maze generator"""
     def __init__(self, size: tuple[int, int], seed: int, perfect: bool = False
                  ) -> None:
+        """Initialize the maze adapter
+
+        Args:
+            size: Maze dimensions as (width, height)
+            seed: seed used to generate the maze
+            perfect: whether to generate a perfect maze
+        """
         width, height = size
         if width <= 0 or height <= 0:
-            raise ValueError("width and height must be positve")
+            raise ValueError("width and height must be positive")
         self.width = width
         self.height = height
         self.seed = seed
@@ -31,6 +39,10 @@ class Maze:
         self.generate()
 
     def generate(self) -> None:
+        """Generate a maze using the A-Maze-ing package
+        Raises:
+            MazeError: If maze generation fails
+        """
         try:
             self.generator = MazeGenerator(
                     size=(self.width, self.height),
@@ -45,6 +57,14 @@ class Maze:
         self.exit = self.generator.maze_exit
 
     def can_move(self, x: int, y: int, direction: str) -> bool:
+        """Check whether movement is possible from a cell
+        Args:
+            x: Column index of the current cell
+            y: Row index of the current cell
+            direction: Movement direction: N, E, S, or W
+        Returns:
+            True if the movement is possible, otherwise False
+        """
         wall, dx, dy = DIRECTIONS[direction]
         cell = self.grid[y][x]
         if cell & wall:
@@ -76,4 +96,11 @@ class Maze:
         return result
 
     def is_blocked(self, x: int, y: int) -> bool:
+        """Check whether a maze cell is blocked
+        Args:
+            x: column index of the cell
+            y: row index of the cell
+        Returns:
+            True if the cell is blocked otherwise False
+        """
         return self.grid[y][x] == ALL
