@@ -40,7 +40,7 @@ class Maze:
         except Exception:
             raise MazeError("Maze generation failed")
 
-        self.grid = self.generator.maze
+        self.grid: list[list[int]] = self.generator.maze
         self.entry = self.generator.maze_entry
         self.exit = self.generator.maze_exit
 
