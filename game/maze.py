@@ -102,3 +102,8 @@ class Maze:
             True if the cell is blocked otherwise False
         """
         return self.grid[y][x] == ALL
+
+    def get_next_position(self, x: int, y: int, direction: str) -> tuple[int, int]:
+        """Returns the new (x, y) after moving one in a direction"""
+        d, dx, dy = DIRECTIONS[direction]
+        return x + dx, y + dy
