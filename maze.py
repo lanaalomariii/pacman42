@@ -20,8 +20,7 @@ class MazeError(Exception):
 
 class Maze:
     """Adapter around the A-Maze-ing maze generator"""
-    def __init__(self, size: tuple[int, int], seed: int, perfect: bool = False
-                 ) -> None:
+    def __init__(self, size: tuple[int, int], seed: int) -> None:
         """Initialize the maze adapter
 
         Args:
@@ -35,7 +34,7 @@ class Maze:
         self.width = width
         self.height = height
         self.seed = seed
-        self.perfect = perfect
+        self.perfect = False
         self.generate()
 
     def generate(self) -> None:
@@ -44,17 +43,17 @@ class Maze:
             MazeError: If maze generation fails
         """
         try:
-            self.generator = MazeGenerator(
+            self._generator = MazeGenerator(
                     size=(self.width, self.height),
                     perfect=self.perfect, seed=self.seed
                     )
 
-        except Exception:
-            raise MazeError("Maze generation failed")
+        except Exception as exc:
+            raise MazeError(f"Maze generation failed {exc}") from exc
 
-        self.grid: list[list[int]] = self.generator.maze
-        self.entry = self.generator.maze_entry
-        self.exit = self.generator.maze_exit
+        self.grid: list[list[int]] = self._generator.maze
+        self.entry = self._generator.maze_entry
+        self.exit = self._generator.maze_exit
 
     def can_move(self, x: int, y: int, direction: str) -> bool:
         """Check whether movement is possible from a cell
