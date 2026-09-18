@@ -26,7 +26,6 @@ class Maze:
         Args:
             size: Maze dimensions as (width, height)
             seed: seed used to generate the maze
-            perfect: whether to generate a perfect maze
         """
         width, height = size
         if width <= 0 or height <= 0:
