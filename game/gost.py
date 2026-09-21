@@ -1,12 +1,13 @@
 from .maze import Maze, DIRECTIONS
 from enum import Enum
+import time
 
 
 class GhostState(Enum):
     """Possible states of a ghost"""
-    CHASE = "chase"
-    FLEE = "flee"
-    EATEN = "eaten"
+    NORMAL = "normal"  # chase player
+    EDIBLE = "edible"  # move away from player
+    RESPAWNING = "respawning"  # return to start position
 
 
 class GhostType(Enum):
@@ -31,7 +32,7 @@ class Ghost:
         self.x = self.start_x
         self.y = self.start_y
         self.direction = "N"
-        self.state = GhostState.CHASE
+        self.state = GhostState.NORMAL
         self.ghost_type = ghost_type
 
     def move(self, direction: str) -> bool:
@@ -87,3 +88,63 @@ class Ghost:
             dicpos[d] = self.compute_distance(new_position, target)
         best_direction, _ = min(dicpos.items(), key=lambda item: item[1])
         return best_direction
+
+    def choose_farthest_direction(self, target: tuple[int, int]) -> str | None:
+        """Choose the direction that gets the ghost farthest to the target
+        Args:
+            target: target position as (x, y)
+        Returns:
+            the direction with the maximum distance
+            or None if no move is possible"""
+        dicpos: dict[str, int] = {}
+        directions = self.get_directions()
+        if not directions:
+            return None
+        for d in directions:
+            new_position = self.maze.get_next_position(self.x, self.y, d)
+            dicpos[d] = self.compute_distance(new_position, target)
+        best_direction, _ = max(dicpos.items(), key=lambda item: item[1])
+        return best_direction
+
+    def chase(self, target: tuple[int, int]) -> None:
+        """Move the ghost towards the target
+        Args:
+            target: target position as (x, y)
+        """
+        direction = self.choose_direction(target)
+        if direction is not None:
+            self.move(direction)
+
+    def edible(self, target: tuple[int, int]) -> None:
+        """Move the ghost away from the target
+        Args:
+            target: target position as (x, y)
+            """
+        direction = self.choose_farthest_direction(target)
+        if direction is not None:
+            self.move(direction)
+
+    def eaten(self) -> None:
+        """set ghost as respawning after being eaten"""
+        self.state = GhostState.RESPAWNING
+        self.respawn_time = time.time() + 5
+
+    def update_respawn(self, position: tuple[int, int]) -> None:
+        """respawn the ghost after waiting time"""
+        if self.state == GhostState.RESPAWNING:
+            if time.time() >= self.respawn_time:
+                self.respawn()
+                self.state = GhostState.NORMAL
+                self.chase(position)
+
+    def move_ghost(self, target: tuple[int, int]) -> None:
+        """Choose the ghost movment based on its current state
+        Args:
+            target: Target position as (x, y)
+        """
+        if self.state == GhostState.NORMAL:
+            self.chase(target)
+        elif self.state == GhostState.EDIBLE:
+            self.edible(target)
+        elif self.state == GhostState.RESPAWNING:
+            self.update_respawn(target)
