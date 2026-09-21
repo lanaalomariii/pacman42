@@ -3,7 +3,8 @@ from game.maze import Maze
 
 class Player:
     """Represent the player character"""
-    def __init__(self, maze: Maze, start: tuple[int, int]) -> None:
+    def __init__(self, maze: Maze, start: tuple[int, int],
+                 lives: int = 3) -> None:
         """Initialize the player
         Args:
             maze: maze the player moves within
@@ -13,7 +14,7 @@ class Player:
         self.start_x, self.start_y = start
         self.x = self.start_x
         self.y = self.start_y
-        self.lives = 3
+        self.lives = lives
         self.direction = "N"
 
     def move(self, direction: str) -> bool:
