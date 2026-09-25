@@ -135,16 +135,34 @@ class Ghost:
             if time.time() >= self.respawn_time:
                 self.respawn()
                 self.state = GhostState.NORMAL
-                self.chase(position)
+                self.chase(position)    
+    def get_target_position(self, player_position: tuple[int, int], player_direction: str, moves: int = 4) -> tuple[int, int]:
+        """Calculate a target position ahead of the player
+        Args:
+            player_position: the player's current position
+            player_direction: the player's current direction
+            moves: number of cells to move ahead of the player
+        Returns:
+            the calculated position ahead of the player
+        """
+        d, dx, dy = DIRECTIONS[player_direction]
+        x, y = player_position
+        new = (x + dx * moves, y + dy * moves)
+        return new
 
-    def move_ghost(self, target: tuple[int, int]) -> None:
+    def move_ghost(self, player_position: tuple[int, int], player_direction: str) -> None:
         """Choose the ghost movment based on its current state
         Args:
-            target: Target position as (x, y)
+            player_position: the player's current position
+            player_direction: the player's current direction
         """
         if self.state == GhostState.NORMAL:
+            if self.ghost_type == GhostType.PINKY:
+                target = self.get_target_position(player_position, player_direction)
+            else:
+                target = player_position
             self.chase(target)
         elif self.state == GhostState.EDIBLE:
-            self.edible(target)
+            self.edible(player_position)
         elif self.state == GhostState.RESPAWNING:
-            self.update_respawn(target)
+            self.update_respawn(player_position)
