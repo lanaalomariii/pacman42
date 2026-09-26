@@ -139,6 +139,7 @@ class Ghost:
                 self.state = GhostState.NORMAL
                 self.chase(position)
     def set_edible(self) -> None:
+        """set a ghost as edible"""
         if self.state != GhostState.RESPAWNING:
             self.state = GhostState.EDIBLE
             self.edible_until = time.time() + 8
@@ -211,6 +212,8 @@ class Ghost:
         if self.state == GhostState.NORMAL:
             self.move_normal(player_position, player_direction)
         elif self.state == GhostState.EDIBLE:
-            self.edible(player_position)
+            self.update_edible()
+            if self.state == GhostState.EDIBLE:
+                self.edible(player_position)
         elif self.state == GhostState.RESPAWNING:
             self.update_respawn(player_position)
