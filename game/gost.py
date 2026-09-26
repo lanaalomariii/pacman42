@@ -188,16 +188,16 @@ class Ghost:
 
         else:
             self.chase(player_position)
+    def move_ghost(self, player_position: tuple[int, int], player_direction: str) -> None:
 
+        """Choose the ghost movement based on its current state
+            Args:
+                player_position: the player's current position
+                player_direction: the player's current direction
         """
-        elif self.state == GhostState.EDIBLE:
-            self.edible(player_position)
-        elif self.state == GhostState.RESPAWNING:
-            self.update_respawn(player_position)distance((self.x, self.y), player_position)
-            else:
-                self.chase(player_position)
+        if self.state == GhostState.NORMAL:
+            self.move_normal(player_position, player_direction)
         elif self.state == GhostState.EDIBLE:
             self.edible(player_position)
         elif self.state == GhostState.RESPAWNING:
             self.update_respawn(player_position)
-"""
