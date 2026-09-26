@@ -1,7 +1,7 @@
 from .maze import Maze, DIRECTIONS
 from enum import Enum
 import time
-
+import random
 
 class GhostState(Enum):
     """Possible states of a ghost"""
@@ -145,24 +145,59 @@ class Ghost:
         Returns:
             the calculated position ahead of the player
         """
-        d, dx, dy = DIRECTIONS[player_direction]
+        d, dx, dy = DIRECTIONS[player_direction]  #PINKY
         x, y = player_position
         new = (x + dx * moves, y + dy * moves)
         return new
 
-    def move_ghost(self, player_position: tuple[int, int], player_direction: str) -> None:
-        """Choose the ghost movment based on its current state
-        Args:
+    def choose_random_direction(self) -> str | None:
+        """Choose a random direction from the available
+        Returns:
+            A random valid direction or None if the gost has no where to go
+        """
+        directions = self.get_directions()  # INKY
+        if not directions:
+            return None
+        return random.choice(directions)
+     def move_normal(self, player_position: tuple[int, int], player_direction: str) -> None:
+         """Movment logic whhen the gost is in NORMAL state
+         Args:
             player_position: the player's current position
             player_direction: the player's current direction
         """
-        if self.state == GhostState.NORMAL:
-            if self.ghost_type == GhostType.PINKY:
-                target = self.get_target_position(player_position, player_direction)
-            else:
-                target = player_position
+        if self.ghost_type == GhostType.PINKY:
+            target = self.get_target_position(player_position, player_direction)
             self.chase(target)
+        elif self.ghost_type == GhostType.INKY:
+            directions = self.get_directions()
+            if len(directions) > 1:
+                if random.random() < 0.4:
+                    direction = self.choose_random_direction()
+                    if direction is not None:
+                        self.move(direction)
+                else:
+                    self.chase(player_position)
+            elif len(directions) == 1:
+                self.move(directions[0])
+        elif self.ghost_type == GhostType.CLYDE:
+            distance = self.compute_distance((self.x, self.y), player_position)
+            if distance > 8:
+                self.chase(player_position)
+            else:
+                self.chase((self.start_x, self.start_y))
+
+        else:
+            self.chase(player_position)
+
+        """
+        elif self.state == GhostState.EDIBLE:
+            self.edible(player_position)
+        elif self.state == GhostState.RESPAWNING:
+            self.update_respawn(player_position)distance((self.x, self.y), player_position)
+            else:
+                self.chase(player_position)
         elif self.state == GhostState.EDIBLE:
             self.edible(player_position)
         elif self.state == GhostState.RESPAWNING:
             self.update_respawn(player_position)
+"""
