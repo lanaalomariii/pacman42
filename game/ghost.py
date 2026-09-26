@@ -26,6 +26,7 @@ class Ghost:
         Args:
             maze: Maze where the ghost moves
             start: starting position as (x, y)
+            ghost_type: type of the ghost
         """
         self.maze = maze
         self.start_x, self.start_y = start
@@ -34,7 +35,8 @@ class Ghost:
         self.direction = "N"
         self.state = GhostState.NORMAL
         self.ghost_type = ghost_type
-
+        self.respawn_time = 0.0
+        self.edible_until = 0.0
     def move(self, direction: str) -> bool:
         """Move the ghost if the requested direction is possible
         Args:
@@ -135,7 +137,18 @@ class Ghost:
             if time.time() >= self.respawn_time:
                 self.respawn()
                 self.state = GhostState.NORMAL
-                self.chase(position)    
+                self.chase(position)
+    def set_edible(self) -> None:
+        if self.state != GhostState.RESPAWNING:
+            self.state = GhostState.EDIBLE
+            self.edible_until = time.time() + 8
+
+    def update_edible(self) -> None:
+        """Return the ghost to normal state when edible duration ends"""
+        if self.state == GhostState.EDIBLE:
+            if time.time() >= self.edible_until:
+                self.state = GhostState.NORMAL
+
     def get_target_position(self, player_position: tuple[int, int], player_direction: str, moves: int = 4) -> tuple[int, int]:
         """Calculate a target position ahead of the player
         Args:
@@ -159,12 +172,12 @@ class Ghost:
         if not directions:
             return None
         return random.choice(directions)
-     def move_normal(self, player_position: tuple[int, int], player_direction: str) -> None:
-         """Movment logic whhen the gost is in NORMAL state
-         Args:
-            player_position: the player's current position
-            player_direction: the player's current direction
-        """
+    def move_normal(self, player_position: tuple[int, int], player_direction: str) -> None:
+        """Movment logic whhen the gost is in NORMAL state
+            Args:
+                player_position: the player's current position
+                player_direction: the player's current direction
+            """
         if self.ghost_type == GhostType.PINKY:
             target = self.get_target_position(player_position, player_direction)
             self.chase(target)
