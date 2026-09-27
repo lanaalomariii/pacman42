@@ -3,6 +3,7 @@ from enum import Enum
 import time
 import random
 
+
 class GhostState(Enum):
     """Possible states of a ghost"""
     NORMAL = "normal"  # chase player
@@ -37,6 +38,7 @@ class Ghost:
         self.ghost_type = ghost_type
         self.respawn_time = 0.0
         self.edible_until = 0.0
+
     def move(self, direction: str) -> bool:
         """Move the ghost if the requested direction is possible
         Args:
@@ -138,6 +140,7 @@ class Ghost:
                 self.respawn()
                 self.state = GhostState.NORMAL
                 self.chase(position)
+
     def set_edible(self) -> None:
         """set a ghost as edible"""
         if self.state != GhostState.RESPAWNING:
@@ -150,7 +153,9 @@ class Ghost:
             if time.time() >= self.edible_until:
                 self.state = GhostState.NORMAL
 
-    def get_target_position(self, player_position: tuple[int, int], player_direction: str, moves: int = 4) -> tuple[int, int]:
+    def get_target_position(self, player_position: tuple[int, int],
+                            player_direction: str,
+                            moves: int = 4) -> tuple[int, int]:
         """Calculate a target position ahead of the player
         Args:
             player_position: the player's current position
@@ -159,7 +164,7 @@ class Ghost:
         Returns:
             the calculated position ahead of the player
         """
-        d, dx, dy = DIRECTIONS[player_direction]  #PINKY
+        d, dx, dy = DIRECTIONS[player_direction]  # PINKY
         x, y = player_position
         new = (x + dx * moves, y + dy * moves)
         return new
@@ -173,14 +178,17 @@ class Ghost:
         if not directions:
             return None
         return random.choice(directions)
-    def move_normal(self, player_position: tuple[int, int], player_direction: str) -> None:
-        """Movment logic whhen the gost is in NORMAL state
+
+    def move_normal(self, player_position: tuple[int, int],
+                    player_direction: str) -> None:
+        """Movement logic when the ghost is in NORMAL state
             Args:
                 player_position: the player's current position
                 player_direction: the player's current direction
             """
         if self.ghost_type == GhostType.PINKY:
-            target = self.get_target_position(player_position, player_direction)
+            target = self.get_target_position(
+                    player_position, player_direction)
             self.chase(target)
         elif self.ghost_type == GhostType.INKY:
             directions = self.get_directions()
@@ -202,8 +210,9 @@ class Ghost:
 
         else:
             self.chase(player_position)
-    def move_ghost(self, player_position: tuple[int, int], player_direction: str) -> None:
 
+    def move_ghost(self, player_position: tuple[int, int],
+                   player_direction: str) -> None:
         """Choose the ghost movement based on its current state
             Args:
                 player_position: the player's current position
