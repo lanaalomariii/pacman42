@@ -1,4 +1,4 @@
-from game.maze import Maze
+from .maze import Maze
 
 
 class Player:
