@@ -1,4 +1,5 @@
 import time
+import random
 from .pacgum_manager import PacgumManager
 from .maze import Maze
 
@@ -33,7 +34,10 @@ class LevelManager:
         configs = self.get_current_level_configs()
         height = configs["height"]
         width = configs["width"]
-        seed = configs["seed"]
+        if self.current_level == 0:
+            seed = configs["seed"]
+        else:
+            seed = random.randint(0, 10000)
         return Maze((width, height), seed)
 
     def has_next_level(self) -> bool:
