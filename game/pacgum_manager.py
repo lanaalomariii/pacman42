@@ -24,16 +24,9 @@ class PacgumManager:
         self.place_super_pacgums()
         self.place_pacgums()
 
-    def get_corner_positions(self) -> list[tuple[int, int]]:
-        """Returns the four corner coordinates of the maze
-        as a list of (x, y)"""
-        return [(0, 0), (self.maze.width - 1, 0),
-                (0, self.maze.height - 1),
-                (self.maze.width - 1, self.maze.height - 1)]
-
     def place_super_pacgums(self) -> None:
         """Place super-pacgums on the 4 corners of the maze"""
-        corners = self.get_corner_positions()
+        corners = self.maze.get_corner_positions()
         for x, y in corners:
             if not self.maze.is_blocked(x, y):
                 self.super_pacgums.add((x, y))

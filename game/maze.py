@@ -103,7 +103,15 @@ class Maze:
         """
         return self.grid[y][x] == ALL
 
-    def get_next_position(self, x: int, y: int, direction: str) -> tuple[int, int]:
+    def get_next_position(self, x: int, y: int,
+                          direction: str) -> tuple[int, int]:
         """Returns the new (x, y) after moving one in a direction"""
         d, dx, dy = DIRECTIONS[direction]
         return x + dx, y + dy
+
+    def get_corner_positions(self) -> list[tuple[int, int]]:
+        """Returns the four corner coordinates of the maze
+        as a list of (x, y)"""
+        return [(0, 0), (self.width - 1, 0),
+                (0, self.height - 1),
+                (self.width - 1, self.height - 1)]
