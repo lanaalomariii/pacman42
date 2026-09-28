@@ -39,7 +39,7 @@ def load_highscores(file: str) -> list[dict[str, str | int]]:
     try:
         with open(file, "r") as f:
             data: Any = json.load(f)
-    except (json.JSONDecodeError, OSError):
+    except (json.JSONDecodeError, OSError, ValueError):
         return []
     if not isinstance(data, list):
         return []
