@@ -28,8 +28,7 @@ class PacgumManager:
         """Place super-pacgums on the 4 corners of the maze"""
         corners = self.maze.get_corner_positions()
         for x, y in corners:
-            if not self.maze.is_blocked(x, y):
-                self.super_pacgums.add((x, y))
+            self.super_pacgums.add((x, y))
 
     def place_pacgums(self) -> None:
         """Place pacgums randomly on cells not used by super-pacgums"""
