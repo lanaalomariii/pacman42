@@ -73,8 +73,13 @@ class LevelManager:
         return self.is_level_complete() and not self.has_next_level()
 
     def player_start_position(self) -> tuple[int, int]:
-        """Return the center position where the player starts"""
-        return (self.maze.width // 2, self.maze.height // 2)
+        """Return a valid starting position center of the maze.
+        If the center cell is blocked move right until an open cell is found"""
+        x = self.maze.width // 2
+        y = self.maze.height // 2
+        while self.maze.is_blocked(x, y) and x < self.maze.width - 1:
+            x += 1
+        return (x, y)
 
     def ghost_start_positions(self) -> list[tuple[int, int]]:
         """Return the starting positions for four ghosts"""
