@@ -1,4 +1,3 @@
-# This is the game configuration file
 {
     "highscore_filename": "highscores.json",
     "lives": 3,
@@ -8,15 +7,15 @@
     "points_per_ghost": 200,
     "level_max_time": 90,
     "levels": [
-        { "width": 15, "height": 15, "seed": 42 },
-        { "width": 19, "height": 21, "seed": 100 },
-        { "width": 21, "height": 21, "seed": 202 },
-        { "width": 21, "height": 23, "seed": 303 },
-        { "width": 23, "height": 23, "seed": 404 },
-        { "width": 23, "height": 25, "seed": 505 },
-        { "width": 25, "height": 25, "seed": 606 },
-        { "width": 25, "height": 27, "seed": 707 },
-        { "width": 27, "height": 27, "seed": 808 },
-        { "width": 27, "height": 29, "seed": 909 }
+        { "width": 21, "height": 21, "seed": 42 },
+        { "width": 21, "height": 21, "seed": 142 },
+        { "width": 21, "height": 21, "seed": 242 },
+        { "width": 21, "height": 21, "seed": 342 },
+        { "width": 21, "height": 21, "seed": 442 },
+        { "width": 21, "height": 21, "seed": 542 },
+        { "width": 21, "height": 21, "seed": 642 },
+        { "width": 21, "height": 21, "seed": 742 },
+        { "width": 21, "height": 21, "seed": 842 },
+        { "width": 21, "height": 21, "seed": 942 }
     ]
 }
