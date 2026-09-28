@@ -61,7 +61,7 @@ class LevelManager:
 
     def is_level_complete(self) -> bool:
         """Check whether all pacgums in the current level are collected"""
-        return not self.items.pacgums
+        return self.items.all_collected()
 
     def is_won(self) -> bool:
         """Check whether the player finished the final level
