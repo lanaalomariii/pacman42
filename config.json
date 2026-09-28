@@ -5,7 +5,7 @@
     "pacgum": 42,
     "points_per_pacgum": 10,
     "points_per_super_pacgum": 50,
-    "points_per_ghost": 70,
+    "points_per_ghost": 200,
     "level_max_time": 90,
     "levels": [
         { "width": 15, "height": 15, "seed": 42 },
@@ -14,7 +14,7 @@
         { "width": 21, "height": 23, "seed": 303 },
         { "width": 23, "height": 23, "seed": 404 },
         { "width": 23, "height": 25, "seed": 505 },
-        { "width": 25, "height": 25, "seed": -606 },
+        { "width": 25, "height": 25, "seed": 606 },
         { "width": 25, "height": 27, "seed": 707 },
         { "width": 27, "height": 27, "seed": 808 },
         { "width": 27, "height": 29, "seed": 909 }
