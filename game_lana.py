@@ -1,8 +1,8 @@
 from game.player import Player
 from game.levels import LevelManager
 from game.ghost import Ghost, GhostState, GhostType
-from .pacgum_manager import PacgumManager, PacgumType
-from .score import Score
+from game.pacgum_manager import PacgumType
+from game.score import Score
 
 
 class Game:
@@ -34,7 +34,7 @@ class Game:
         self.items = self.level_manager.items
     
     def item_collection(self) -> None:
-        collected_item = self.level_manager.items.collect((self.player.x, self.player.y))
+        collected_item = self.items.collect((self.player.x, self.player.y))
         if collected_item == PacgumType.PACGUM:
             self.score.add_pacgum()
         elif collected_item == PacgumType.SUPER_PACGUM:
@@ -56,8 +56,8 @@ class Game:
 
     def skip_level(self) -> None:
         if not self.level_manager.next_level():  # last level so mark its as complete
-            self.level_manager.items.pacgums.clear()
-            self.level_manager.items.super_pacgums.clear()
+            self.items.pacgums.clear()
+            self.items.super_pacgums.clear()
         else:
             self.enter_level()
     def add_extra_life(self) -> None:
@@ -69,3 +69,19 @@ class Game:
             return
         for ghost in self.ghosts:
             ghost.move_ghost((self.player.x, self.player.y), self.player.direction)
+    def update(self, player_direction: str | None) -> str:
+        if player_direction is not None:
+            self.move_player(player_direction)
+        self.move_ghosts()
+        self.item_collection()
+        self.ghost_touch()
+        if not self.player.is_alive():
+            return "lost"
+        if self.level_manager.time_remaining() <= 0:
+            return "time is up"
+        if (self.level_manager.is_level_complete() and self.level_manager.has_next_level()):
+            self.level_manager.next_level()
+            self.enter_level()
+        elif self.level_manager.is_won():
+            return "won"
+        return "playing"
