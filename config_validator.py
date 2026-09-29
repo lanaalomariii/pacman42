@@ -38,24 +38,25 @@ def validate_levels(prev_levels: Any) -> List[Dict[str, int]]:
         print("Setting default levels..")
         prev_levels = DEFAULTS["levels"]
     else:
+        levels_len = len(prev_levels)
+        if levels_len < DEFAULT_LEVEL_COUNT:
+            print("Insufficient number of levels...")
+            print(f"Appending {DEFAULT_LEVEL_COUNT - levels_len} number of levels")
+            prev_levels = prev_levels + DEFAULTS["levels"][levels_len: DEFAULT_LEVEL_COUNT]
+        if levels_len > DEFAULT_LEVEL_COUNT:
+            print("Too many levels! the levels list will be truncated"
+                    " to the default number of levels, which is 10 :)")
+            prev_levels = prev_levels[:DEFAULT_LEVEL_COUNT]
         for i, level in enumerate(prev_levels):
             if not isinstance(level, dict):
                 print("Invalid format of level <dict>..")
                 print("Setting default level dict..")
-                prev_levels[i] = DEFAULTS["levels"][i]
-            levels_len = len(prev_levels)
-            if levels_len < DEFAULT_LEVEL_COUNT:
-                print("Insufficient number of levels...")
-                print(f"Appending {DEFAULT_LEVEL_COUNT - levels_len} number of levels")
-                prev_levels.extend(DEFAULTS["levels"][levels_len:DEFAULT_LEVEL_COUNT])
-            if levels_len > DEFAULT_LEVEL_COUNT:
-                print("Too many levels! the levels list will be truncated"
-                      " to the default number of levels, which is 10 :)")
-                return DEFAULTS["levels"][:DEFAULT_LEVEL_COUNT]
+                prev_levels[i] = dict(DEFAULTS["levels"][i])
+
             else:
-                level["width"] = validate_positive_int(level, "width", DEFAULTS["levels"][i]["width"])
-                level["height"] = validate_positive_int(level, "height", DEFAULTS["levels"][i]["height"])
-                level["seed"] = validate_positive_int(level, "seed", DEFAULTS["levels"][i]["seed"])
+                prev_levels[i]["width"] = validate_positive_int(level, "width", DEFAULTS["levels"][i]["width"])
+                prev_levels[i]["height"] = validate_positive_int(level, "height", DEFAULTS["levels"][i]["height"])
+                prev_levels[i]["seed"] = validate_positive_int(level, "seed", DEFAULTS["levels"][i]["seed"])
     return prev_levels
 
 
