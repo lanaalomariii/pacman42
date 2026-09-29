@@ -14,7 +14,7 @@ class Game:
         self.ghosts = self.create_ghosts()
         # cheat mode
         self.cheat_invincibility = False
-        self.ghost_freeze = False
+        self.cheat_ghost_freeze = False
 
     def create_ghosts(self) -> list[Ghost]:
         positions = self.level_manager.ghost_start_positions()
@@ -53,4 +53,12 @@ class Game:
             elif ghost.state == GhostState.NORMAL:
                 if not self.cheat_invincibility:
                     self.player.lose_life()
- 
+
+    def skip_level(self) -> None:
+        if not self.level_manager.next_level():  # last level so mark its as complete
+            self.level_manager.items.pacgums.clear()
+            self.level_manager.items.super_pacgums.clear()
+        else:
+            self.enter_level()
+    def add_extra_life(self) -> None:
+        self.player.lives += 1
