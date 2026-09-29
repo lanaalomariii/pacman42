@@ -30,6 +30,9 @@ def validate_positive_int(config: dict, key: str, default: int) -> int:
 
 
 def validate_levels(prev_levels: Any) -> List[Dict[str, int]]:
+    if not prev_levels:
+        print("Your list of levels is empty, setting default...")
+        prev_levels = DEFAULTS["levels"]
     if not isinstance(prev_levels, list):
         print("Invalid format of levels..")
         print("Setting default levels..")
@@ -40,6 +43,15 @@ def validate_levels(prev_levels: Any) -> List[Dict[str, int]]:
                 print("Invalid format of level <dict>..")
                 print("Setting default level dict..")
                 prev_levels[i] = DEFAULTS["levels"][i]
+            levels_len = len(prev_levels)
+            if levels_len < DEFAULT_LEVEL_COUNT:
+                print("Insufficient number of levels...")
+                print(f"Appending {DEFAULT_LEVEL_COUNT - levels_len} number of levels")
+                prev_levels.extend(DEFAULTS["levels"][levels_len:DEFAULT_LEVEL_COUNT])
+            if levels_len > DEFAULT_LEVEL_COUNT:
+                print("Too many levels! the levels list will be truncated"
+                      " to the default number of levels, which is 10 :)")
+                return DEFAULTS["levels"][:DEFAULT_LEVEL_COUNT]
             else:
                 level["width"] = validate_positive_int(level, "width", DEFAULTS["levels"][i]["width"])
                 level["height"] = validate_positive_int(level, "height", DEFAULTS["levels"][i]["height"])
@@ -54,17 +66,21 @@ def validate_config(config: dict) -> dict:
     new_config = {}
     for key in config:
         if key.lower() not in valid_keys:
-            print("invalid key detected...")
+            print("Invalid key detected...")
             continue
         new_config[key.lower()] = config[key]
     filename = new_config.get("highscore_filename", DEFAULTS["highscore_filename"])
     if not isinstance(filename, str) or filename == "":
-        print("Error: highscore_filename is invalid ...")
+        print("Error: highscore_filename is either empty or invalid ...")
         print("Note: highscore_filename will be set to highscores.json")
         filename = DEFAULTS["highscore_filename"]
-        new_config["highscore_filename"] = filename
-    for key in valid_keys[1:7]: 
+    new_config["highscore_filename"] = filename
+    for key in valid_keys[1:7]:
         default = DEFAULTS[key]
+        if key not in new_config:
+            print(f"A {key} key is missing...oops..")
+            print(f"Don't worry! we'll set it to default value"
+                  f" of {default} for you :)")
         new_config[key] = validate_positive_int(new_config, key, default)
     new_config["levels"] = validate_levels(new_config.get("levels", DEFAULTS["levels"]))
     return new_config
