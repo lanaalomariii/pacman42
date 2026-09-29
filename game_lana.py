@@ -1,3 +1,4 @@
+import time
 from game.player import Player
 from game.levels import LevelManager
 from game.ghost import Ghost, GhostState, GhostType
@@ -29,6 +30,8 @@ class Game:
         self.player = Player(self.level_manager.maze,
                              self.level_manager.player_start_position(), lives)
         self.ghosts = self.create_ghosts()
+        self.paused = False
+        self.pause_started_at = 0.0
         # cheat mode
         self.cheat_invincibility = False
         self.cheat_ghost_freeze = False
@@ -105,13 +108,35 @@ class Game:
             ghost.move_ghost((self.player.x, self.player.y),
                              self.player.direction)
 
+    def pause(self) -> None:
+        """Pause the game"""
+        if not self.paused:
+            self.paused = True
+            self.pause_started_at = time.time()
+
+    def resume(self) -> None:
+        """Resume the game"""
+        if not self.paused:
+            return
+        elapsed = time.time() - self.pause_started_at
+        self.paused = False
+        self.level_manager.start_time += elapsed
+        for ghost in self.ghosts:
+            if ghost.state == GhostState.RESPAWNING:
+                ghost.respawn_time += elapsed
+            if ghost.state == GhostState.EDIBLE:
+                ghost.edible_until += elapsed
+
     def update(self, player_direction: str | None) -> str:
         """Update the game state.
         Args:
             player_direction: Direction requested by player.
         Returns:
-            The current game status: "playing", "lost", "won" or "time is up".
+            The current game status: "playing", "paused",
+            "lost", "won" or "time is up".
         """
+        if self.paused:
+            return "paused"
         if self.level_manager.time_remaining() <= 0:
             return "time is up"
         if player_direction is not None:
