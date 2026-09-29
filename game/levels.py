@@ -19,7 +19,8 @@ class LevelManager:
         self.level_max_time = level_max_time
         self.current_level = 0
         self.maze = self.build_maze_level()
-        self.items = PacgumManager(self.maze, self.get_pacgum_count())
+        self.items = PacgumManager(self.maze, self.player_start_position(),
+                                   self.get_pacgum_count())
         self.start_time = time.time()
 
     def get_current_level_configs(self) -> dict[str, int]:
@@ -61,7 +62,8 @@ class LevelManager:
             return False
         self.current_level += 1
         self.maze = self.build_maze_level()
-        self.items = PacgumManager(self.maze, self.get_pacgum_count())
+        self.items = PacgumManager(self.maze, self.player_start_position(),
+                                   self.get_pacgum_count())
         self.start_time = time.time()
         return True
 
