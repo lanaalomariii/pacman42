@@ -62,3 +62,10 @@ class Game:
             self.enter_level()
     def add_extra_life(self) -> None:
         self.player.lives += 1
+    def move_player(self, direction: str) -> None:
+        self.player.move(direction)
+    def move_ghosts(self) -> None:
+        if self.cheat_ghost_freeze:
+            return
+        for ghost in self.ghosts:
+            ghost.move_ghost((self.player.x, self.player.y), self.player.direction)
