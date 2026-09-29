@@ -17,6 +17,7 @@ class Game:
             levels: list of level configs, each with width, height, seed
             pacgum_count: Number of pacgums in the first level
             level_max_time: Maximum time allowed for each level
+            lives: number of lives the player starts with
             points_per_pacgum: Points awarded for collecting a pacgum
             points_per_super_pacgum: Points awarded for collecting super-pacgum
             points_per_ghost: Points awarded for eating a ghost
@@ -25,7 +26,6 @@ class Game:
                            points_per_super_pacgum,
                            points_per_ghost)
         self.level_manager = LevelManager(levels, pacgum_count, level_max_time)
-        self.items = self.level_manager.items
         self.player = Player(self.level_manager.maze,
                              self.level_manager.player_start_position(), lives)
         self.ghosts = self.create_ghosts()
@@ -54,11 +54,11 @@ class Game:
         self.player.respawn()
         self.player.direction = "N"
         self.ghosts = self.create_ghosts()
-        self.items = self.level_manager.items
 
     def item_collection(self) -> None:
         """Check and apply pacgum or super-pacgum collection"""
-        collected_item = self.items.collect((self.player.x, self.player.y))
+        collected_item = self.level_manager.items.collect(
+                (self.player.x, self.player.y))
         if collected_item == PacgumType.PACGUM:
             self.score.add_pacgum()
         elif collected_item == PacgumType.SUPER_PACGUM:
@@ -81,8 +81,8 @@ class Game:
     def skip_level(self) -> None:
         """Skip to the next level or complete the last level"""
         if not self.level_manager.next_level():  # last level mark as complete
-            self.items.pacgums.clear()
-            self.items.super_pacgums.clear()
+            self.level_manager.items.pacgums.clear()
+            self.level_manager.items.super_pacgums.clear()
         else:
             self.enter_level()
 
@@ -112,6 +112,8 @@ class Game:
         Returns:
             The current game status: "playing", "lost", "won" or "time is up".
         """
+        if self.level_manager.time_remaining() <= 0:
+            return "time is up"
         if player_direction is not None:
             self.move_player(player_direction)
         self.move_ghosts()
@@ -119,8 +121,6 @@ class Game:
         self.ghost_touch()
         if not self.player.is_alive():
             return "lost"
-        if self.level_manager.time_remaining() <= 0:
-            return "time is up"
         if (
                 self.level_manager.is_level_complete()
                 and self.level_manager.has_next_level()
