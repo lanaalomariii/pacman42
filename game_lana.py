@@ -4,7 +4,6 @@ from game.ghost import Ghost, GhostState, GhostType
 from .pacgum_manager import PacgumManager, PacgumType
 from .score import Score
 
-GHOST_TYPE = [GhostType.BLINKY, GhostType.PINKY, GhostType.INKY, GhostType.CLYDE]
 
 class Game:
     def __init__(self, levels: list[dict], pacgum_count: int, level_max_time: float, lives: int, points_per_pacgum: int, points_per_super_pacgum: int, points_per_ghost: int) -> None:
@@ -32,4 +31,26 @@ class Game:
         self.player.respawn()
         self.player.direction = "N"
         self.ghosts = self.create_ghosts()
+        self.items = self.level_manager.items
+    
+    def item_collection(self) -> None:
+        collected_item = self.level_manager.items.collect((self.player.x, self.player.y))
+        if collected_item == PacgumType.PACGUM:
+            self.score.add_pacgum()
+        elif collected_item == PacgumType.SUPER_PACGUM:
+            self.score.add_super_pacgum()
+            for ghost in self.ghosts:
+                ghost.set_edible()
 
+
+    def ghost_touch(self) -> None:
+        for ghost in self.ghosts:
+            if (ghost.x, ghost.y) != (self.player.x, self.player.y):
+                continue
+            if ghost.state == GhostState.EDIBLE:
+                ghost.eaten()
+                self.score.add_ghost()
+            elif ghost.state == GhostState.NORMAL:
+                if not self.cheat_invincibility:
+                    self.player.lose_life()
+ 
