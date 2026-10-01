@@ -138,7 +138,10 @@ class Ghost:
         if self.state == GhostState.RESPAWNING:
             if time.time() >= self.respawn_time:
                 self.respawn()
-                self.state = GhostState.NORMAL
+                if time.time() < self.edible_until:
+                    self.state = GhostState.EDIBLE
+                else:
+                    self.state = GhostState.NORMAL
                 self.chase(position)
 
     def set_edible(self) -> None:
