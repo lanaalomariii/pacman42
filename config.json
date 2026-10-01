@@ -7,15 +7,15 @@
     "points_per_ghost": 200,
     "level_max_time": 90,
     "levels": [
-        { "width": 21, "height": 21, "seed": 42 },
-        { "width": 21, "height": 21, "seed": 142 },
-        { "width": 21, "height": 21, "seed": 242 },
-        { "width": 21, "height": 21, "seed": 342 },
-        { "width": 21, "height": 21, "seed": 442 },
-        { "width": 21, "height": 21, "seed": 542 },
-        { "width": 21, "height": 21, "seed": 642 },
-        { "width": 21, "height": 21, "seed": 742 },
-        { "width": 21, "height": 21, "seed": 842 },
-        { "width": 21, "height": 21, "seed": 942 }
+        { "width": 19, "height": 19, "seed": 42 },
+        { "width": 19, "height": 19, "seed": 142 },
+        { "width": 19, "height": 19, "seed": 242 },
+        { "width": 19, "height": 19, "seed": 342 },
+        { "width": 19, "height": 19, "seed": 442 },
+        { "width": 19, "height": 19, "seed": 542 },
+        { "width": 19, "height": 19, "seed": 642 },
+        { "width": 19, "height": 19, "seed": 742 },
+        { "width": 19, "height": 19, "seed": 842 },
+        { "width": 19, "height": 19, "seed": 942 }
     ]
 }
