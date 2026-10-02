@@ -30,6 +30,12 @@ INSTRUCTIONS = [
 
 
 def button_rect(index: int) -> pygame.Rect:
+    """Return the rectangle of a menu button
+    Args:
+        index: position of the button in the menu
+    Returns:
+        the rectangle covering that button
+    """
     x = BUTTON_X0 + index * (BUTTON_W + BUTTON_GAP)
     return pygame.Rect(x, BUTTON_CY - BUTTON_H // 2, BUTTON_W, BUTTON_H)
 
@@ -38,6 +44,14 @@ def draw_menu(screen: pygame.Surface,
               background: pygame.Surface,
               title_font: pygame.font.Font,
               label_font: pygame.font.Font, choice: int) -> None:
+    """Draw the main menu and highlight the selected option
+    Args:
+        screen: the surface on which to draw the menu
+        background: the background image of the menu
+        title_font: the font used for the menu title
+        label_font: the font used for the button labels
+        choice: the index of the currently selected button
+    """
     screen.blit(background, (0, 0))
     title = title_font.render("PAC-MAN", True, YELLOW)
     screen.blit(title, title.get_rect(center=(WIDTH // 2, 88)))
@@ -52,6 +66,13 @@ def draw_menu(screen: pygame.Surface,
 
 
 def run_menu(screen: pygame.Surface, background: pygame.Surface) -> int:
+    """Run the main menu and handle user input
+    Args:
+        screen: The surface on which to display the menu
+        background: The background image
+    Returns:
+        The index of the chosen button in LABELS
+    """
     clock = pygame.time.Clock()
     title_font = pygame.font.Font("graphics/font.ttf", 90)
     label_font = pygame.font.Font("graphics/font.ttf", 18)
@@ -77,7 +98,12 @@ def run_menu(screen: pygame.Surface, background: pygame.Surface) -> int:
 
 
 def run_instructions(screen: pygame.Surface,
-                     background: pygame. Surface) -> None:
+                     background: pygame.Surface) -> None:
+    """Display the instructions screen and handle user input
+    Args:
+        screen: The surface to draw
+        background: The background image
+    """
     clock = pygame.time.Clock()
     title_font = pygame.font.Font("graphics/font.ttf", 50)
     line_font = pygame.font.Font("graphics/font.ttf", 20)
@@ -105,7 +131,7 @@ def run_instructions(screen: pygame.Surface,
 
 
 def main() -> None:
-
+    """Initialize Pygame and run the main menu loop"""
     pygame.init()
     try:
         screen = pygame.display.set_mode((WIDTH, HEIGHT))
