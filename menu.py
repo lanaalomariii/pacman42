@@ -12,7 +12,8 @@ BUTTON_W = 250
 BUTTON_H = 56
 BUTTON_GAP = 16
 BUTTON_CY = 668
-BUTTON_X0 = (WIDTH - (len(LABELS) * BUTTON_W + (len(LABELS) - 1) * BUTTON_GAP)) // 2
+BUTTON_X0 = (WIDTH - (len(LABELS)
+                      * BUTTON_W + (len(LABELS) - 1) * BUTTON_GAP)) // 2
 
 INSTRUCTIONS = [
         "Move: Arrow keys",
@@ -27,22 +28,28 @@ INSTRUCTIONS = [
         "Press ESC or ENTER or SPACE to go back"
         ]
 
+
 def button_rect(index: int) -> pygame.Rect:
     x = BUTTON_X0 + index * (BUTTON_W + BUTTON_GAP)
     return pygame.Rect(x, BUTTON_CY - BUTTON_H // 2, BUTTON_W, BUTTON_H)
-def draw_menu(screen: pygame.Surface, background: pygame.Surface, title_font: pygame.font.Font, label_font: pygame.font.Font, choice: int) -> None:
+
+
+def draw_menu(screen: pygame.Surface,
+              background: pygame.Surface,
+              title_font: pygame.font.Font,
+              label_font: pygame.font.Font, choice: int) -> None:
     screen.blit(background, (0, 0))
     title = title_font.render("PAC-MAN", True, YELLOW)
-    screen.blit(title, title.get_rect(center = (WIDTH // 2, 88)))
+    screen.blit(title, title.get_rect(center=(WIDTH // 2, 88)))
     for i, label in enumerate(LABELS):
         rect = button_rect(i)
         selected = i == choice
-    
         color = YELLOW if selected else DARK_BLUE
         pygame.draw.rect(screen, color, rect, border_radius=12)
         text_color = DARK if selected else WHITE
         text = label_font.render(label, True, text_color)
         screen.blit(text, text.get_rect(center=rect.center))
+
 
 def run_menu(screen: pygame.Surface, background: pygame.Surface) -> int:
     clock = pygame.time.Clock()
@@ -52,22 +59,25 @@ def run_menu(screen: pygame.Surface, background: pygame.Surface) -> int:
 
     while True:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT: 
+            if event.type == pygame.QUIT:
                 return len(LABELS) - 1
 
             if event.type == pygame.KEYDOWN:
-                if event.key in (pygame.K_LEFT, pygame.K_UP, pygame.K_a, pygame.K_w):
+                if event.key in (pygame.K_LEFT, pygame.K_UP,
+                                 pygame.K_a, pygame.K_w):
                     choice = (choice - 1) % len(LABELS)
-                elif event.key in (pygame.K_RIGHT, pygame.K_DOWN, pygame.K_d, pygame.K_s): 
-                    choice = (choice + 1) % len (LABELS)
+                elif event.key in (pygame.K_RIGHT, pygame.K_DOWN,
+                                   pygame.K_d, pygame.K_s):
+                    choice = (choice + 1) % len(LABELS)
                 elif event.key in (pygame.K_RETURN, pygame.K_SPACE):
                     return choice
-
-
         draw_menu(screen, background, title_font, label_font, choice)
-        pygame.display.update() 
+        pygame.display.update()
         clock.tick(60)
-def run_instructions (screen: pygame.Surface, background: pygame. Surface) -> None:
+
+
+def run_instructions(screen: pygame.Surface,
+                     background: pygame. Surface) -> None:
     clock = pygame.time.Clock()
     title_font = pygame.font.Font("graphics/font.ttf", 50)
     line_font = pygame.font.Font("graphics/font.ttf", 20)
@@ -79,18 +89,21 @@ def run_instructions (screen: pygame.Surface, background: pygame. Surface) -> No
 
             if event.type == pygame.KEYDOWN:
 
-                if event.key in (pygame.K_RETURN, pygame.K_ESCAPE, pygame.K_SPACE):
+                if event.key in (pygame.K_RETURN,
+                                 pygame.K_ESCAPE, pygame.K_SPACE):
                     return
         screen.blit(background, (0, 0))
         panel = pygame.Rect(180, 160, 920, 500)
         pygame.draw.rect(screen, DARK_BLUE, panel, border_radius=20)
         title = title_font.render("INSTRUCTIONS", True, YELLOW)
         screen.blit(title, title.get_rect(center=(WIDTH // 2, 100)))
-        for i, line in enumerate (INSTRUCTIONS):
+        for i, line in enumerate(INSTRUCTIONS):
             text = line_font.render(line, True, WHITE)
-            screen.blit(text, text.get_rect(center=(WIDTH // 2, 220+ i * 40)))
+            screen.blit(text, text.get_rect(center=(WIDTH // 2, 220 + i * 40)))
         pygame.display.update()
         clock.tick(60)
+
+
 def main() -> None:
 
     pygame.init()
@@ -115,5 +128,7 @@ def main() -> None:
             break
 
     pygame.quit()
+
+
 if __name__ == "__main__":
     main()
