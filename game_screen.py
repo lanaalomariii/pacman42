@@ -1,5 +1,5 @@
 import pygame
-from game_lana import Game
+from game_ import Game
 from game.ghost import Ghost, GhostState, GhostType
 from data.highscores import MAX_NAME_LEN, load_highscores, add_score, save_highscores
 HIGHSCORE_FILE = "highscores.json" #tt
