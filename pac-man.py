@@ -2,6 +2,7 @@ import pygame
 import sys
 import json
 import menu
+import game_screen
 from config_validator import validate_config
 
 
@@ -43,7 +44,7 @@ def main() -> None:
     while True:
         action = menu.run_menu(screen, background)
         if action == 0:
-            pass
+            game_screen.run_game(screen, config)
         elif action == 1:
             pass
         elif action == 2:
@@ -57,4 +58,4 @@ if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        print("\nProgram Interrupted. Exiting..")
+        print("\nPirogram Interrupted. Exiting..")
