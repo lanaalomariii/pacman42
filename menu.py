@@ -128,33 +128,3 @@ def run_instructions(screen: pygame.Surface,
             screen.blit(text, text.get_rect(center=(WIDTH // 2, 220 + i * 40)))
         pygame.display.update()
         clock.tick(60)
-
-
-def main() -> None:
-    """Initialize Pygame and run the main menu loop"""
-    pygame.init()
-    try:
-        screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        pygame.display.set_caption("Pacman")
-        background = pygame.image.load("graphics/BG.png").convert()
-    except (pygame.error, FileNotFoundError) as e:
-        print(f"Error: cannot load game assets: {e}")
-        pygame.quit()
-        sys.exit(1)
-
-    while True:
-        action = run_menu(screen, background)
-        if action == 0:
-            pass
-        elif action == 1:
-            pass
-        elif action == 2:
-            run_instructions(screen, background)
-        else:
-            break
-
-    pygame.quit()
-
-
-if __name__ == "__main__":
-    main()
