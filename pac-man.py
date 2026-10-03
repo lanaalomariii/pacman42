@@ -48,7 +48,7 @@ def main() -> None:
         elif action == 1:
             pass
         elif action == 2:
-            run_instructions(screen, background)
+            menu.run_instructions(screen, background)
         else:
             break
     pygame.quit()

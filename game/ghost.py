@@ -4,6 +4,9 @@ import time
 import random
 
 
+OPPOSITE = {"N": "S", "S": "N", "E": "W", "W": "E"}
+
+
 class GhostState(Enum):
     """Possible states of a ghost"""
     NORMAL = "normal"  # chase player
@@ -83,10 +86,12 @@ class Ghost:
         Returns:
             the direction with the minimum distance
             or None if no move is possible"""
-        dicpos: dict[str, int] = {}
         directions = self.get_directions()
         if not directions:
             return None
+        directions = [d for d in directions if d !=
+                      OPPOSITE.get(self.direction)] or directions
+        dicpos: dict[str, int] = {}
         for d in directions:
             new_position = self.maze.get_next_position(self.x, self.y, d)
             dicpos[d] = self.compute_distance(new_position, target)

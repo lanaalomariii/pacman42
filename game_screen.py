@@ -4,7 +4,6 @@ from game.ghost import Ghost, GhostState, GhostType
 from data.highscores import (MAX_NAME_LEN, load_highscores,
                              add_score, save_highscores)
 
-
 HIGHSCORE_FILE = "highscores.json"
 TEXT_COLOR = (255, 255, 255)
 END_IMAGES = {
@@ -12,7 +11,7 @@ END_IMAGES = {
         "lost": "graphics/lose.png",
         "time is up": "graphics/time_up.png"}
 FPS = 60
-MOVE_EVERY = 9
+MOVE_EVERY = 7
 
 GHOST_DRAW_OFFSET = {
     GhostType.BLINKY: (0, 0),
@@ -22,8 +21,8 @@ GHOST_DRAW_OFFSET = {
 }
 YELLOW = (255, 220, 0)
 LIGHT = (235, 245, 235)
-BACKGROUND = (135, 170, 140)
-WALL_COLOR = (255, 255, 255)
+BACKGROUND = (0, 0, 0)
+WALL_COLOR = (33, 33, 222)
 DOT_COLOR = (255, 255, 255)
 SUPER_DOT_COLOR = (255, 255, 255)
 EDIBLE_TINT = (60, 60, 255, 140)
@@ -183,16 +182,16 @@ def draw_maze(screen: pygame.Surface, game: Game, cell_size: int,
             py = offset_y + y * cell_size
             if cell & NORTH_WALL:
                 pygame.draw.line(screen, WALL_COLOR, (px, py),
-                                 (px + cell_size, py), 2)
+                                 (px + cell_size, py), 3)
             if cell & SOUTH_WALL:
                 pygame.draw.line(screen, WALL_COLOR, (px, py + cell_size),
-                                 (px + cell_size, py + cell_size), 2)
+                                 (px + cell_size, py + cell_size), 3)
             if cell & WEST_WALL:
                 pygame.draw.line(screen, WALL_COLOR, (px, py),
-                                 (px, py + cell_size), 2)
+                                 (px, py + cell_size), 3)
             if cell & EAST_WALL:
                 pygame.draw.line(screen, WALL_COLOR, (px + cell_size, py),
-                                 (px + cell_size, py + cell_size), 2)
+                                 (px + cell_size, py + cell_size), 3)
 
 
 def draw_items(screen: pygame.Surface,
@@ -376,6 +375,10 @@ def run_game(screen: pygame.Surface, config: dict) -> str:
         draw_items(screen, game, cell_size, offset_x, offset_y)
         draw_player(screen, game, player_images, cell_size, offset_x, offset_y)
         draw_ghosts(screen, game, ghost_images, cell_size, offset_x, offset_y)
+        hud_font = pygame.font.Font("graphics/font.ttf", 20)
+        score_text = hud_font.render(f"Score: {game.score.get_score()}", True, (255, 255, 255))
+        score_rect = score_text.get_rect(topleft=(10, 10))
+        screen.blit(score_text, score_rect)
         pygame.display.update()
 
 
