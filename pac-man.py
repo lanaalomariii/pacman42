@@ -7,6 +7,9 @@ from config_validator import validate_config
 
 
 def main() -> None:
+    if len(sys.argv) != 2:
+        print("Usage: python3 pacman.py <config.json>...")
+        sys.exit(1)
     try:
         with open(sys.argv[1], "r") as f:
             lines = f.read()
@@ -29,9 +32,6 @@ def main() -> None:
         sys.exit(1)
     except FileNotFoundError:
         print("Error: file not found")
-        sys.exit(1)
-    except IndexError:
-        print("Usage: python3 pacman.py <config.json>...")
         sys.exit(1)
     try:
         screen = pygame.display.set_mode((menu.WIDTH, menu.HEIGHT))
@@ -58,4 +58,4 @@ if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        print("\nPirogram Interrupted. Exiting..")
+        print("\nProgram Interrupted. Exiting..")
