@@ -376,37 +376,8 @@ def run_game(screen: pygame.Surface, config: dict) -> str:
         draw_player(screen, game, player_images, cell_size, offset_x, offset_y)
         draw_ghosts(screen, game, ghost_images, cell_size, offset_x, offset_y)
         hud_font = pygame.font.Font("graphics/font.ttf", 20)
-        score_text = hud_font.render(f"Score: {game.score.get_score()}", True, (255, 255, 255))
+        score_text = hud_font.render(f"Score: {game.score.get_score()}", True,
+                                     (255, 255, 255))
         score_rect = score_text.get_rect(topleft=(10, 10))
         screen.blit(score_text, score_rect)
         pygame.display.update()
-
-
-if __name__ == "__main__":
-    pygame.init()
-    screen = pygame.display.set_mode((1280, 720))
-    pygame.display.set_caption("Pac-Man")
-    config = {
-            "lives": 3,
-            "pacgum": 42,
-            "points_per_pacgum": 10,
-            "points_per_super_pacgum": 50,
-            "points_per_ghost": 200,
-            "level_max_time": 90,
-            "levels":
-            [
-                {"width": 19, "height": 19, "seed": 42},
-                {"width": 21, "height": 21, "seed": 142},
-                {"width": 21, "height": 21, "seed": 242},
-                {"width": 21, "height": 21, "seed": 342},
-                {"width": 21, "height": 21, "seed": 442},
-                {"width": 21, "height": 21, "seed": 542},
-                {"width": 21, "height": 21, "seed": 642},
-                {"width": 21, "height": 21, "seed": 742},
-                {"width": 21, "height": 21, "seed": 842},
-                {"width": 21, "height": 21, "seed": 942}
-                ]
-            }
-
-    run_game(screen, config)
-    pygame.quit()
