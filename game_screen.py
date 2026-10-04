@@ -407,6 +407,7 @@ def run_game(screen: pygame.Surface, config: dict) -> str:
                 if event.key in DIRECTION_KEYS:
                     pending_direction = DIRECTION_KEYS[event.key]
                 elif event.key == pygame.K_ESCAPE:
+                    game.pause()
                     result = pause_menu(screen)
                     if result == "Return to Menu":
                         return "menu"
@@ -439,4 +440,3 @@ def run_game(screen: pygame.Surface, config: dict) -> str:
         draw_ghosts(screen, game, ghost_images, cell_size, offset_x, offset_y)
         draw_hud(screen, game, hud_font)
         pygame.display.update()
-        print(f"FPS: {clock.get_fps():.1f}")
