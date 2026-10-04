@@ -269,7 +269,7 @@ def draw_centered_text(screen: pygame.Surface, text: str, size: int,
         center_y: the vertical position of the text center
         color: the color of the text
     """
-    font = pygame.font.Font(None, size)
+    font = pygame.font.Font("graphics/font.ttf", size)
     surface = font.render(text, True, color)
     rect = surface.get_rect(center=(screen.get_width() // 2, center_y))
     screen.blit(surface, rect)
@@ -319,6 +319,32 @@ def ask_name(screen: pygame.Surface, status: str, score: int) -> None | str:
         draw_centered_text(screen, "Press Enter to continue", 32, 650, LIGHT)
         pygame.display.update()
 
+
+def pause_menu(screen: pygame.Surface) -> str:
+    options = ["Resume", "Return to Menu"]
+    selected = 0
+    clock = pygame.time.Clock()
+    background = pygame.image.load("graphics/Pause.png")
+    background.set_alpha(150)
+    while True:
+        clock.tick(FPS)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return "quit"
+            if event.type == pygame.KEYDOWN:
+                if event.key in (pygame.K_UP, pygame.K_w):
+                    selected = (selected - 1) % len(options)
+                elif event.key in (pygame.K_DOWN, pygame.K_s):
+                    selected = (selected + 1) % len(options)
+                elif event.key == pygame.K_RETURN:
+                    return options[selected]
+        screen.fill((0, 0, 0))
+        screen.blit(background, (0, 0))
+        draw_centered_text(screen, "Pause Menu", 70, 160, LIGHT)
+        for i, option in enumerate(options):
+            color = YELLOW if i == selected else LIGHT
+            draw_centered_text(screen, option, 40, 400 + i * 100, color)
+        pygame.display.update()
 
 def draw_hud(screen: pygame.Surface, game: Game) -> None:
     hud_font = pygame.font.Font("graphics/font.ttf", 20)
@@ -372,7 +398,11 @@ def run_game(screen: pygame.Surface, config: dict) -> str:
                 if event.key in DIRECTION_KEYS:
                     pending_direction = DIRECTION_KEYS[event.key]
                 elif event.key == pygame.K_ESCAPE:
-                    return "menu"
+                    result = pause_menu(screen)
+                    if result == "Return to Menu":
+                        return "menu"
+                    game.resume()
+
         if frame_count % MOVE_EVERY == 0:
             status = game.update(pending_direction)
             if status in ("lost", "won", "time is up"):
