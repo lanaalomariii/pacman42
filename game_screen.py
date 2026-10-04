@@ -310,13 +310,13 @@ def ask_name(screen: pygame.Surface, status: str, score: int) -> None | str:
                 name += event.unicode
 
         screen.blit(background, (0, 0))
-        draw_centered_text(screen, f"Score: {score}", 64, 440, YELLOW)
-        draw_centered_text(screen, "Enter your name", 38, 497, LIGHT)
+        draw_centered_text(screen, f"Score: {score}", 48, 440, YELLOW)
+        draw_centered_text(screen, "Enter your name", 30, 497, LIGHT)
         pygame.draw.rect(screen, (0, 0, 0), box, border_radius=12)
         pygame.draw.rect(screen, YELLOW, box, 3, border_radius=12)
 
-        draw_centered_text(screen, name, 58, box.centery)
-        draw_centered_text(screen, "Press Enter to continue", 32, 650, LIGHT)
+        draw_centered_text(screen, name, 34, box.centery)
+        draw_centered_text(screen, "Press Enter to continue", 24, 650, LIGHT)
         pygame.display.update()
 
 
@@ -347,20 +347,19 @@ def pause_menu(screen: pygame.Surface) -> str:
         pygame.display.update()
 
 
-def draw_hud(screen: pygame.Surface, game: Game) -> None:
-    hud_font = pygame.font.Font("graphics/font.ttf", 20)
-    score_text = hud_font.render(f"Score: {game.score.get_score()}", True,
+def draw_hud(screen: pygame.Surface, game: Game, font: pygame.font.Font) -> None:
+    score_text = font.render(f"Score: {game.score.get_score()}", True,
     (255, 255, 255))
     score_rect = score_text.get_rect(topleft=(5, 5))
     screen.blit(score_text, score_rect)
 
-    lives_text = hud_font.render(f"Lives: {game.player.lives}", True,
+    lives_text = font.render(f"Lives: {game.player.lives}", True,
                                  (255, 255, 255)
                             )
     lives_rect = lives_text.get_rect(topleft=(5, 40))
     screen.blit(lives_text, lives_rect)
     time_left = int(game.level_manager.time_remaining())
-    time_text = hud_font.render(f"Time: {time_left}", True,
+    time_text = font.render(f"Time: {time_left}", True,
     (255, 255, 255))
     time_rect = time_text.get_rect(topleft=(5, 75))
     screen.blit(time_text, time_rect)
@@ -370,6 +369,7 @@ def highscore_menu(screen: pygame.Surface) -> str:
     clock = pygame.time.Clock()
     background = pygame.image.load("graphics/Pause.png")
     background.set_alpha(150)
+
 
 def run_game(screen: pygame.Surface, config: dict) -> str:
     """Run the game loop
@@ -388,12 +388,15 @@ def run_game(screen: pygame.Surface, config: dict) -> str:
                 points_per_ghost=config["points_per_ghost"])
     clock = pygame.time.Clock()
     player_original, ghost_original = load_images()
+    hud_font = pygame.font.Font("graphics/font.ttf", 20)
     player_images = {}
     ghost_images = {}
     last_cell_size = -1
     width, height = screen.get_size()
     pending_direction = None
     frame_count = 0
+    maze_surface = None
+    maze_level = -1
     while True:
         clock.tick(FPS)
         frame_count += 1
@@ -424,11 +427,16 @@ def run_game(screen: pygame.Surface, config: dict) -> str:
             player_images, ghost_images = scale_images(
                     player_original, ghost_original, cell_size)
             last_cell_size = cell_size
-
-        screen.fill(BACKGROUND)
-        draw_maze(screen, game, cell_size, offset_x, offset_y)
+        if (maze_surface is None
+            or maze_level != game.level_manager.current_level):
+            maze_surface = pygame.Surface((width, height))
+            maze_surface.fill(BACKGROUND)
+            draw_maze(maze_surface, game, cell_size, offset_x, offset_y)
+            maze_level = game.level_manager.current_level
+        screen.blit(maze_surface, (0, 0))
         draw_items(screen, game, cell_size, offset_x, offset_y)
         draw_player(screen, game, player_images, cell_size, offset_x, offset_y)
         draw_ghosts(screen, game, ghost_images, cell_size, offset_x, offset_y)
-        draw_hud(screen, game)
+        draw_hud(screen, game, hud_font)
         pygame.display.update()
+        print(f"FPS: {clock.get_fps():.1f}")
