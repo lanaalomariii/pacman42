@@ -346,23 +346,30 @@ def pause_menu(screen: pygame.Surface) -> str:
             draw_centered_text(screen, option, 40, 400 + i * 100, color)
         pygame.display.update()
 
+
 def draw_hud(screen: pygame.Surface, game: Game) -> None:
     hud_font = pygame.font.Font("graphics/font.ttf", 20)
     score_text = hud_font.render(f"Score: {game.score.get_score()}", True,
-                                  (255, 255, 255))
+    (255, 255, 255))
     score_rect = score_text.get_rect(topleft=(5, 5))
     screen.blit(score_text, score_rect)
 
     lives_text = hud_font.render(f"Lives: {game.player.lives}", True,
-                                  (255, 255, 255))
+                                 (255, 255, 255)
+                            )
     lives_rect = lives_text.get_rect(topleft=(5, 40))
     screen.blit(lives_text, lives_rect)
     time_left = int(game.level_manager.time_remaining())
     time_text = hud_font.render(f"Time: {time_left}", True,
-                                  (255, 255, 255))
+    (255, 255, 255))
     time_rect = time_text.get_rect(topleft=(5, 75))
     screen.blit(time_text, time_rect)
 
+
+def highscore_menu(screen: pygame.Surface) -> str:
+    clock = pygame.time.Clock()
+    background = pygame.image.load("graphics/Pause.png")
+    background.set_alpha(150)
 
 def run_game(screen: pygame.Surface, config: dict) -> str:
     """Run the game loop
@@ -380,7 +387,6 @@ def run_game(screen: pygame.Surface, config: dict) -> str:
                 points_per_super_pacgum=config["points_per_super_pacgum"],
                 points_per_ghost=config["points_per_ghost"])
     clock = pygame.time.Clock()
-    hud_font = pygame.font.Font("graphics/font.ttf", 20)
     player_original, ghost_original = load_images()
     player_images = {}
     ghost_images = {}
