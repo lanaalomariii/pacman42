@@ -312,7 +312,7 @@ def ask_name(screen: pygame.Surface, status: str, score: int) -> None | str:
         screen.blit(background, (0, 0))
         draw_centered_text(screen, f"Score: {score}", 64, 440, YELLOW)
         draw_centered_text(screen, "Enter your name", 38, 497, LIGHT)
-        pygame.draw.rect(screen, (40, 55, 45), box, border_radius=12)
+        pygame.draw.rect(screen, (0, 0, 0), box, border_radius=12)
         pygame.draw.rect(screen, YELLOW, box, 3, border_radius=12)
 
         draw_centered_text(screen, name, 58, box.centery)
@@ -336,6 +336,7 @@ def run_game(screen: pygame.Surface, config: dict) -> str:
                 points_per_super_pacgum=config["points_per_super_pacgum"],
                 points_per_ghost=config["points_per_ghost"])
     clock = pygame.time.Clock()
+    hud_font = pygame.font.Font("graphics/font.ttf", 20)
     player_original, ghost_original = load_images()
     player_images = {}
     ghost_images = {}
@@ -375,7 +376,6 @@ def run_game(screen: pygame.Surface, config: dict) -> str:
         draw_items(screen, game, cell_size, offset_x, offset_y)
         draw_player(screen, game, player_images, cell_size, offset_x, offset_y)
         draw_ghosts(screen, game, ghost_images, cell_size, offset_x, offset_y)
-        hud_font = pygame.font.Font("graphics/font.ttf", 20)
         score_text = hud_font.render(f"Score: {game.score.get_score()}", True,
                                      (255, 255, 255))
         score_rect = score_text.get_rect(topleft=(10, 10))
