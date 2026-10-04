@@ -320,6 +320,24 @@ def ask_name(screen: pygame.Surface, status: str, score: int) -> None | str:
         pygame.display.update()
 
 
+def draw_hud(screen: pygame.Surface, game: Game) -> None:
+    hud_font = pygame.font.Font("graphics/font.ttf", 20)
+    score_text = hud_font.render(f"Score: {game.score.get_score()}", True,
+                                  (255, 255, 255))
+    score_rect = score_text.get_rect(topleft=(5, 5))
+    screen.blit(score_text, score_rect)
+
+    lives_text = hud_font.render(f"Lives: {game.player.lives}", True,
+                                  (255, 255, 255))
+    lives_rect = lives_text.get_rect(topleft=(5, 40))
+    screen.blit(lives_text, lives_rect)
+    time_left = int(game.level_manager.time_remaining())
+    time_text = hud_font.render(f"Time: {time_left}", True,
+                                  (255, 255, 255))
+    time_rect = time_text.get_rect(topleft=(5, 75))
+    screen.blit(time_text, time_rect)
+
+
 def run_game(screen: pygame.Surface, config: dict) -> str:
     """Run the game loop
     Args:
@@ -376,8 +394,5 @@ def run_game(screen: pygame.Surface, config: dict) -> str:
         draw_items(screen, game, cell_size, offset_x, offset_y)
         draw_player(screen, game, player_images, cell_size, offset_x, offset_y)
         draw_ghosts(screen, game, ghost_images, cell_size, offset_x, offset_y)
-        score_text = hud_font.render(f"Score: {game.score.get_score()}", True,
-                                     (255, 255, 255))
-        score_rect = score_text.get_rect(topleft=(10, 10))
-        screen.blit(score_text, score_rect)
+        draw_hud(screen, game)
         pygame.display.update()
