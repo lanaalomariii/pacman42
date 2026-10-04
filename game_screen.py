@@ -4,7 +4,6 @@ from game.ghost import Ghost, GhostState, GhostType
 from data.highscores import (MAX_NAME_LEN, load_highscores,
                              add_score, save_highscores)
 
-HIGHSCORE_FILE = "highscores.json"
 TEXT_COLOR = (255, 255, 255)
 END_IMAGES = {
         "won": "graphics/win.png",
@@ -386,6 +385,7 @@ def run_game(screen: pygame.Surface, config: dict) -> str:
                 points_per_pacgum=config["points_per_pacgum"],
                 points_per_super_pacgum=config["points_per_super_pacgum"],
                 points_per_ghost=config["points_per_ghost"])
+    HIGHSCORE_FILE = config["highscore_filename"]
     clock = pygame.time.Clock()
     player_original, ghost_original = load_images()
     hud_font = pygame.font.Font("graphics/font.ttf", 20)
