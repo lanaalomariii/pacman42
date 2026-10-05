@@ -2,7 +2,7 @@
 
 ## Duration 
 
-The project ran for approximately 4 weeks (one month) start date 7 september from initial planning to the final playable version.
+The project was developed over a period of approximately 4 weeks, starting on 7/9/2026 and progressing from the initial planning phase to the final playable version.
 
 
 ## Approach
