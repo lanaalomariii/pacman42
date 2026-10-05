@@ -1,3 +1,4 @@
+import os
 import pygame
 import sys
 import json
@@ -7,11 +8,15 @@ from config_validator import validate_config
 
 
 def main() -> None:
-    if len(sys.argv) != 2:
+    if len(sys.argv) == 1:
+        config_path = "config.json"
+    elif len(sys.argv) == 2:
+        config_path = sys.argv[1]
+    else:
         print("Usage: python3 pacman.py <config.json>...")
         sys.exit(1)
     try:
-        with open(sys.argv[1], "r") as f:
+        with open(config_path, "r") as f:
             lines = f.read()
             splitted_lines = lines.split("\n")
             json_lines = []
@@ -55,6 +60,11 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    if getattr(sys, "frozen", False):
+        base_path = sys._MEIPASS
+    else:
+        base_path = os.path.dirname(os.path.abspath(__file__))
+    os.chdir(base_path)
     try:
         main()
     except KeyboardInterrupt:
