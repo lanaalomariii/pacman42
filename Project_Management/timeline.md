@@ -25,14 +25,12 @@ We used to-do list to track tasks, split between the two of us from day one (see
 ### UI & Integration (25/9/2026 - 1/10/2026)
 - Game screen, In-Game HUD, game-over and victory screens.
 
-### Cheat Mode & Deployment (2/10/2026 - 5/10/2026)
-- cheat mode logic (invincibility, freeze, extra lives, level skip)
-- 
-
+### Cheat Mode & Deployment (2/10/2026 - 6/10/2026)
+- Cheat mode logic (invincibility, freeze, extra lives, level skip).
 
 ## Team Collaboration
 
 We communicated daily throughout the project via Slack and WhatsApp, coordinating tasks, reviewing each other's code, and discussing design decisions as they came up. 
 Working together was a positive experience overall and the frequent check-ins helped us catch integration issues early rather than at the end.
 
-As expected early on, the Ghost AI and the game screen (UI rendering) took longer than any other individual tasks. The ghost logic needed several rounds of debugging around its edible and respawning states, and the game screen took extra time both to learn Pygame's rendering model and to fix a performance issues
+As expected early on, the Ghost AI and the game screen (UI rendering) took longer than any other individual tasks. The ghost logic needed several rounds of debugging around its edible and respawning states, and the game screen took extra time both to learn Pygame's rendering model and to fix a performance issues.
