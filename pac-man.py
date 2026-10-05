@@ -46,7 +46,7 @@ def main() -> None:
         if action == 0:
             game_screen.run_game(screen, config)
         elif action == 1:
-            pass
+            game_screen.highscore_menu(screen)
         elif action == 2:
             menu.run_instructions(screen, background)
         else:
