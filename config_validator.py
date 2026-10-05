@@ -14,19 +14,20 @@ DEFAULTS: Dict[str, Any] = {
     "points_per_ghost": 200,
     "level_max_time": 90,
     "levels": [
-    {"width": DEFAULT_WIDTH + i * 2,
-     "height": DEFAULT_HEIGHT + i * 2,
-     "seed": DEFAULT_SEED + i * 100}
-    for i in range(DEFAULT_LEVEL_COUNT)
-]
-}
+        {"width": DEFAULT_WIDTH + i * 2,
+         "height": DEFAULT_HEIGHT + i * 2,
+         "seed": DEFAULT_SEED + i * 100}
+        for i in range(DEFAULT_LEVEL_COUNT)
+        ]
+    }
+
 
 def validate_positive_int(config: dict, key: str, default: int) -> int:
     value = config.get(key, default)
     if (not isinstance(value, int) or value <= 0) or (isinstance(value, bool)):
         print(f"Invalid value for key {key}, setting default...")
         value = default
-    return value  
+    return value
 
 
 def validate_levels(prev_levels: Any) -> List[Dict[str, int]]:
@@ -41,11 +42,13 @@ def validate_levels(prev_levels: Any) -> List[Dict[str, int]]:
         levels_len = len(prev_levels)
         if levels_len < DEFAULT_LEVEL_COUNT:
             print("Insufficient number of levels...")
-            print(f"Appending {DEFAULT_LEVEL_COUNT - levels_len} number of levels")
-            prev_levels = prev_levels + DEFAULTS["levels"][levels_len: DEFAULT_LEVEL_COUNT]
+            print(f"Appending {DEFAULT_LEVEL_COUNT - levels_len}"
+                  f"number of levels")
+            prev_levels = prev_levels
+            + DEFAULTS["levels"][levels_len: DEFAULT_LEVEL_COUNT]
         if levels_len > DEFAULT_LEVEL_COUNT:
             print("Too many levels! the levels list will be truncated"
-                    " to the default number of levels, which is 10 :)")
+                  " to the default number of levels, which is 10 :)")
             prev_levels = prev_levels[:DEFAULT_LEVEL_COUNT]
         for i, level in enumerate(prev_levels):
             if not isinstance(level, dict):
@@ -54,9 +57,12 @@ def validate_levels(prev_levels: Any) -> List[Dict[str, int]]:
                 prev_levels[i] = dict(DEFAULTS["levels"][i])
 
             else:
-                prev_levels[i]["width"] = validate_positive_int(level, "width", DEFAULTS["levels"][i]["width"])
-                prev_levels[i]["height"] = validate_positive_int(level, "height", DEFAULTS["levels"][i]["height"])
-                prev_levels[i]["seed"] = validate_positive_int(level, "seed", DEFAULTS["levels"][i]["seed"])
+                prev_levels[i]["width"] = validate_positive_int(
+                        level, "width", DEFAULTS["levels"][i]["width"])
+                prev_levels[i]["height"] = validate_positive_int(
+                        level, "height", DEFAULTS["levels"][i]["height"])
+                prev_levels[i]["seed"] = validate_positive_int(
+                        level, "seed", DEFAULTS["levels"][i]["seed"])
     return prev_levels
 
 
@@ -70,7 +76,8 @@ def validate_config(config: dict) -> dict:
             print("Invalid key detected...")
             continue
         new_config[key.lower()] = config[key]
-    filename = new_config.get("highscore_filename", DEFAULTS["highscore_filename"])
+    filename = new_config.get(
+            "highscore_filename", DEFAULTS["highscore_filename"])
     if not isinstance(filename, str) or filename == "":
         print("Error: highscore_filename is either empty or invalid ...")
         print("Note: highscore_filename will be set to highscores.json")
@@ -83,5 +90,6 @@ def validate_config(config: dict) -> dict:
             print(f"Don't worry! we'll set it to default value"
                   f" of {default} for you :)")
         new_config[key] = validate_positive_int(new_config, key, default)
-    new_config["levels"] = validate_levels(new_config.get("levels", DEFAULTS["levels"]))
+    new_config["levels"] = validate_levels(
+            new_config.get("levels", DEFAULTS["levels"]))
     return new_config
