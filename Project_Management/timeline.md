@@ -7,7 +7,7 @@ The project was developed over a period of approximately 4 weeks, starting on 7/
 
 ## Approach
 
-We used to-do list to track tasks, split between the two of us from day one (see [`work-split.md`](./work-split.md)). Day-to-day coordination happened through Slack and whatsApp, with code shared and reviewed through GitHub.
+We used to-do list to track tasks, split between the two of us from day one (see [`team_organization.md`](./team_organization.md)). Day-to-day coordination happened through Slack and whatsApp, with code shared and reviewed through GitHub.
 
 
 ## Phases
