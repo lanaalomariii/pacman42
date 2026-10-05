@@ -156,7 +156,7 @@ the file is missing, corrupted, or contains invalid entries, it is treated as em
 
 ## Project Management
 
-See the [`Project-Management/`](./Project-Management) directory for our timeline and team organization.
+See the [`Project_Management/`](./Project_Management) directory for our timeline and team organization.
 
 
 ## Resources
