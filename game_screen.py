@@ -364,10 +364,6 @@ def draw_hud(screen: pygame.Surface, game: Game, font: pygame.font.Font) -> None
     screen.blit(time_text, time_rect)
 
 
-def highscore_menu(screen: pygame.Surface) -> str:
-    clock = pygame.time.Clock()
-    background = pygame.image.load("graphics/Pause.png")
-    background.set_alpha(150)
 
 
 def run_game(screen: pygame.Surface, config: dict) -> str:
