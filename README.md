@@ -83,60 +83,46 @@ Pygame: the `Game` class and everything it coordinates (`Player`, `Ghost`, `Pacg
 The game also implements lives, a level time limit, scoring, highscores, pause functionality, cheat mode, and different game states such as victory and game over.
 
 ## General Software Architecture
+```text
 ├── config.json
-│
 ├── config_validator.py
-│
 ├── data
-│   │
-│   ├── highscores.py
-│   │
-│   └── __init__.py
-│
+│   ├── highscores.py
+│   └── __init__.py
 ├── game
-│   │
-│   ├── ghost.py
-│   │
-│   ├── __init__.py
-│   │
-│   ├── levels.py
-│   │
-│   ├── maze.py
-│   │
-│   ├── pacgum_manager.py
-│   │
-│   ├── player.py
-│   │
-│   └── score.py
-│
+│   ├── ghost.py
+│   ├── __init__.py
+│   ├── levels.py
+│   ├── maze.py
+│   ├── pacgum_manager.py
+│   ├── player.py
+│   └── score.py
 ├── game_.py
-│
 ├── game_screen.py
-│
 ├── graphics
-│
-│   ├── BG.png
-│   ├── blinky.png
-│   ├── clyde.png
-│   ├── font.ttf
-│   ├── grey.png
-│   ├── highscore.png
-│   ├── inky.png
-│   ├── lose.png
-│   ├── pacman.png
-│   ├── Pause.png
-│   ├── pinky.png
-│   ├── time_up.png
-│   └── win.png
+│   ├── BG.png
+│   ├── blinky.png
+│   ├── clyde.png
+│   ├── font.ttf
+│   ├── grey.png
+│   ├── highscore.png
+│   ├── inky.png
+│   ├── lose.png
+│   ├── pacman.png
+│   ├── Pause.png
+│   ├── pinky.png
+│   ├── time_up.png
+│   └── win.png
 ├── highscores.json
 ├── Makefile
 ├── mazegenerator-2.1.0-py3-none-any.whl
 ├── menu.py
 ├── pac-man.py
 ├── Project_Management
-│   ├── team_organization.md
-│   └── timeline.md
+│   ├── team_organization.md
+│   └── timeline.md
 └── README.md
+```
 
 The project is devided into two main packages:
 
