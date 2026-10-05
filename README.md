@@ -131,7 +131,7 @@ The project is divided into two main packages:
   - `levels.py` — manages level progression, timers and difficulty scaling.
 
 - **`data/`** - (`highscores.py`) - loads, validates, updates, and saves highscore data.
-- **graphics/** - contains the images, fonts, and other visual assets used by the game and menu.
+- **`graphics/`** - contains the images, fonts, and other visual assets used by the game and menu.
 - `game_.py` — the `Game` class coordinating the main game components including pause/resume and cheat mode.
 - `config_validator.py` sits between the raw JSON file and the rest of the game, producing a fully validated configuration dictionary.
 - `game_screen.py` — handles the game screen, rendering, input, and the main game loop.
