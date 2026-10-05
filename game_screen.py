@@ -427,7 +427,7 @@ def run_game(screen: pygame.Surface, config: dict) -> str:
             if event.type == pygame.KEYDOWN:
                 if event.key in DIRECTION_KEYS:
                     pending_direction = DIRECTION_KEYS[event.key]
-                elif event.key == pygame.K_p:
+                elif event.key in (pygame.K_p, pygame.K_ESCAPE):
                     game.pause()
                     result = pause_menu(screen)
                     if result == "Return to Menu":
