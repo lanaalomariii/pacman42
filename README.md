@@ -3,11 +3,12 @@
 # Pac-Man
 
 ## Description
-This project is a Pac-Man-inspired game built in Python using object-oriented programming and Pygame. The game features a custom maze generated using the A-Maze-ing package, four ghosts each with its own behaviour and targeting strategy
+This project is a Pac-Man-inspired game built in Python using object-oriented programming and Pygame. The game features a custom maze generated using the Mazes are generated using the `A-Maze-ing` package assigned to us and used as-is through an adapter(`Maze` class) that exposes the operations the rest of the game needs, such as checking walls and computing neighbors.
+Four ghosts each with its own behaviour and targeting strategy
 
-**Blinky:** Chase Pac-Man's current position
+**Blinky:** Chases Pac-Man's current position
 
-**Pinky:** Targets the position four cell ahead of Pac-Man in the direction they are facing.
+**Pinky:** Targets the position four cells ahead of Pac-Man in the direction they are facing.
 
 
 **Inky:** Uses a combination of chasing and random movement (mostly chases the player).
@@ -15,7 +16,7 @@ This project is a Pac-Man-inspired game built in Python using object-oriented pr
 **Clyde:** Chases Pac-Man when far away and returns to his starting position when he gets too close.
 
 The game includes multiple levels, scoring, lives, a time limit, highscores and a configuration system
-The goal is collect all pacgums and super-pacgums across at least 10 levels without losing all lives or runnig out of time.
+The goal is to collect all pacgums and super-pacgums across at least 10 levels without losing all lives or running out of time.
 
 ## Instructions
 
@@ -23,9 +24,9 @@ The goal is collect all pacgums and super-pacgums across at least 10 levels with
 ```bash
 make install
 ```
-This creates a local vertual environment(`venv/`) and installs all dependencies inside it (Pygame and the assigned `mazegenerator` package
+This creates a local virtual environment(`venv/`) and installs all dependencies inside it (Pygame and the assigned `mazegenerator` package).
 
-### Activate the vertual environment
+### Activate the virtual environment
 ```bash
 source venv/bin/activate
 ```
@@ -37,12 +38,12 @@ This launches the game using the default `config.json` file
 
 To run with a custom configuration file:
 ```bash
-python3 pac-man.py path_to_custom_confi.json
+python3 pac-man.py path_to_custom_config.json
 ```
 ### Other Makefile targets
-- `make debug` run the game under python debugger (pdb).
-- `make lint` run flake8 and mypy checks.
-- `make clean` remove caches and the virtual environment.
+- `make debug` runs the game under python debugger (pdb).
+- `make lint` runs flake8 and mypy checks.
+- `make clean` removes caches and the virtual environment.
 
 ### Controls
 - Move: Arrow keys or WASD.
@@ -76,9 +77,9 @@ Mazes are generated using an external `A-Maze-ing` package assigned used as-is t
 The first level always uses a fixed seed, so every playthrough starts identically. Every subsequent level uses a randomly generated seed. If maze generation fails for any reason, the error is caught and handled without crashing the game.
 
 ## Implementation
-The game components were seperated into different classes and files.
+The game components were separated into different classes and files.
 
-Pygame: the `Game` class and everything it coordinates (`Player`, `Ghost`, `PacgumManager`,`LevelManager`, `Score`), Ghost behaviour as descriped in Description all of them use a Manhattan-distance to pick their next step. this is a deliberate simplification over a full pathfinding search (such as BFS)
+The `Game` class coordinates the main gameplay components(`Player`, `Ghost`, `PacgumManager`,`LevelManager`, `Score`), Ghost behaviour is described in Description section. The ghosts use a Manhattan distance to pick their next step. This is a deliberate simplification compared with a full pathfinding search (such as BFS)
 
 The game also implements lives, a level time limit, scoring, highscores, pause functionality, cheat mode, and different game states such as victory and game over.
 
@@ -124,20 +125,21 @@ The game also implements lives, a level time limit, scoring, highscores, pause f
 └── README.md
 ```
 
-The project is devided into two main packages:
+The project is divided into two main packages:
 
-- **`game/`** — the main game engin:
+- **`game/`** — the main game engine:
   - `maze.py` — adapter around the A-Maze-ing generator
   - `player.py` — handles player movement, lives and respawning
   - `ghost.py` — implements ghost behaviours and states
   - `pacgum_manager.py` — handles pacgum and super-pacgum placement and collection
   - `score.py` — manages score tracking
-  - `levels.py` — manage level progression, timers and difficulty scaling
+  - `levels.py` — manages level progression, timers and difficulty scaling
 
 - **`data/`** -(`highscores.py`) - loads, validates, updates, and saves highscore data.
 - **graphics** -- contains the images, fonts, and other visual assets used by the game and menu.
 - `game_.py` — the `Game` class coordinating the main game components including pause/resume and cheat mode
 - `config_validator.py` sits between the raw JSON file and the rest of the game, producing a fully validated configuration dictionary.
+-  `game_screen.py` — handles the game screen, rendering, input, and the main game loop.
 - `pac-man.py` - serves as the CLI entry point, loads and validates the configuration, initializes Pygame, and controls the transition between the main menu and the game.
 - `menu.py` - handles the main menu and instructions screen, including navigation and user input.
 
@@ -162,9 +164,9 @@ See the [`Project_Management/`](./Project_Management) directory for our timeline
 ## Resources
 
 - [Pygame documentation](https://www.pygame.org/docs/)
-- [Pygame](https://www.geeksforgeeks.org/python/pygame-tutorial/)
+- [GeeksforGeeks Pygame Tutorial](https://www.geeksforgeeks.org/python/pygame-tutorial/)
 
 ### AI used
-AI helped us with the Pygame part of the game screen with solving the problem of large images, Scaling them correctly positioning them inside the maze and with the layout of name-entry screen.
+AI helped us with the Pygame part of the game screen, particularly with solving the problem of large images, scaling them correctly, positioning them inside the maze and designing the layout of name-entry screen.
 
-and help us for the reachability check using BFS to make sure that pacgums are placed only on cell reachablefrom playe's starting position.
+AI also help us implement the reachability check using BFS to make sure that pacgums are placed only on cells reachable from the player's starting position.
