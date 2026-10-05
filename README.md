@@ -46,7 +46,11 @@ python3 pac-man.py path_to_custom_config.json
 
 ### Controls
 - Move: Arrow keys or WASD.
-- ESC: Pause the game (you can choose resume game or return to the main menu).
+- ESC or P: Pause the game (you can choose to resume game or return to the main menu).
+- I: Toggle invincibility (cheat).
+- F: Toggle ghost freeze (cheat).
+- N: Skip to the next level (cheat).
+- E: Gain an extra life (cheat).
 
 ## Configuration
 
@@ -140,11 +144,12 @@ The project is divided into two main packages:
 
 ##  Cheat mode
 
-Cheat mode is intended to help reviewers test the game quickly. It supports:
-- Invincibility (ghosts cannot cost the player a life).
-- Ghost freeze (ghosts stop moving).
-- Extra lives.
-- Level skip.
+| Key | Effect |
+|---|---|
+| `I` | Toggle player invincibility |
+| `F` | Toggle ghost freeze ((ghosts stop moving)|
+| `N` | Skip to the next level |
+| `E` | Gain an extra life |
 
 ## Highscore
 
