@@ -1,20 +1,21 @@
-## Work Split
+# Work Split
+
 The project was divided between us, the work was shared fairly.
 
-### Shared Tasks
+## Shared Tasks
 - Game Screen.
 - Cheat Mode
 - Integration, Testing and debugging the final game(playing together)
 
-### Individual Tasks
+## Individual Tasks
 
-#### lalomari
+### lalomari
 - Highscores system.
 - Maze adapter.
 - Player, Ghosts and level structure
 - Pacgums, Super-pacgums and Scoring
 
-#### fadarwis
+### fadarwis
 - Configuration system.
 - Configuration validation.
 - UI & Main Menu
