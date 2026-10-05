@@ -138,7 +138,7 @@ The project is devided into two main packages:
 - **graphics** -- contains the images, fonts, and other visual assets used by the game and menu.
 - `game_.py` — the `Game` class coordinating the main game components including pause/resume and cheat mode
 - `config_validator.py` sits between the raw JSON file and the rest of the game, producing a fully validated configuration dictionary.
-- `pac-man.py` - erves as the CLI entry point, loads and validates the configuration, initializes Pygame, and controls the transition between the main menu and the game.
+- `pac-man.py` - serves as the CLI entry point, loads and validates the configuration, initializes Pygame, and controls the transition between the main menu and the game.
 - `menu.py` - handles the main menu and instructions screen, including navigation and user input.
 
 ##  Cheat mode
@@ -156,14 +156,15 @@ the file is missing, corrupted, or contains invalid entries, it is treated as em
 
 ## Project Management
 
-See the [`project-management/`](./project-management) directory for our timeline and team organization.
+See the [`Project-Management/`](./Project-Management) directory for our timeline and team organization.
 
 
 ## Resources
 
 - [Pygame documentation](https://www.pygame.org/docs/)
-- [Pygame] (https://www.geeksforgeeks.org/python/pygame-tutorial/)
+- [Pygame](https://www.geeksforgeeks.org/python/pygame-tutorial/)
 
 ### AI used
 AI helped us with the Pygame part of the game screen with solving the problem of large images, Scaling them correctly positioning them inside the maze and with the layout of name-entry screen.
+
 and help us for the reachability check using BFS to make sure that pacgums are placed only on cell reachablefrom playe's starting position.
