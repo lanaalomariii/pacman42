@@ -427,7 +427,7 @@ def run_game(screen: pygame.Surface, config: dict) -> str:
             if event.type == pygame.KEYDOWN:
                 if event.key in DIRECTION_KEYS:
                     pending_direction = DIRECTION_KEYS[event.key]
-                elif event.key == pygame.K_ESCAPE:
+                elif event.key == pygame.K_p:
                     game.pause()
                     result = pause_menu(screen)
                     if result == "Return to Menu":
@@ -437,6 +437,10 @@ def run_game(screen: pygame.Surface, config: dict) -> str:
                     game.cheat_invincibility = not game.cheat_invincibility
                 elif event.key == pygame.K_f:
                     game.cheat_ghost_freeze = not game.cheat_ghost_freeze
+                elif event.key == pygame.K_n:
+                    game.skip_level()
+                elif event.key == pygame.K_e:
+                    game.add_extra_life()
         if frame_count % MOVE_EVERY == 0:
             status = game.update(pending_direction)
             if status in ("lost", "won", "time is up"):
