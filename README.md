@@ -1,4 +1,4 @@
-*This activity has been created as part of the 42 curriculum by <lalomari>, <fadarwis>*
+*This activity has been created as part of the 42 curriculum by lalomari, fadarwis*
 
 # Pac-Man
 
