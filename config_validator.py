@@ -44,8 +44,10 @@ def validate_levels(prev_levels: Any) -> List[Dict[str, int]]:
             print("Insufficient number of levels...")
             print(f"Appending {DEFAULT_LEVEL_COUNT - levels_len}"
                   f"number of levels")
-            prev_levels = prev_levels
-            + DEFAULTS["levels"][levels_len: DEFAULT_LEVEL_COUNT]
+            prev_levels = (
+                    prev_levels
+                    + DEFAULTS["levels"][levels_len: DEFAULT_LEVEL_COUNT]
+                    )
         if levels_len > DEFAULT_LEVEL_COUNT:
             print("Too many levels! the levels list will be truncated"
                   " to the default number of levels, which is 10 :)")
