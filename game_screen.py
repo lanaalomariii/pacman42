@@ -366,8 +366,29 @@ def draw_hud(screen: pygame.Surface, game: Game, font: pygame.font.Font) -> None
 
 def highscore_menu(screen: pygame.Surface) -> str:
     clock = pygame.time.Clock()
-    background = pygame.image.load("graphics/Pause.png")
-    background.set_alpha(150)
+    pause_font = pygame.font.Font("graphics/font.ttf", 30)
+    scores = load_highscores("highscores.json")
+    while True:
+        clock.tick(FPS)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return "quit"
+            if event.type == pygame.KEYDOWN:
+                if event.key in (pygame.K_ESCAPE, pygame.K_RETURN):
+                    return "menu"
+        screen.fill((0, 0, 0))
+        panel = pygame.Rect(180, 160, 920, 530)
+        pygame.draw.rect(screen, YELLOW, panel, width=3, border_radius=20)
+        draw_centered_text(screen, "High Scores", 70, 100, YELLOW)
+        for i, entry in enumerate(scores):
+            y = 250 + i * 40
+            name_text = pause_font.render(entry["name"], True, LIGHT)
+            name_rect = name_text.get_rect(topleft=(400, y))
+            screen.blit(name_text, name_rect)
+            score_text = pause_font.render(str(entry["score"]), True, LIGHT)
+            score_rect = score_text.get_rect(topright=(800, y))
+            screen.blit(score_text, score_rect)
+        pygame.display.update()
 
 
 def run_game(screen: pygame.Surface, config: dict) -> str:
