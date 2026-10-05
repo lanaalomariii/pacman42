@@ -433,7 +433,10 @@ def run_game(screen: pygame.Surface, config: dict) -> str:
                     if result == "Return to Menu":
                         return "menu"
                     game.resume()
-
+                elif event.key == pygame.K_i:
+                    game.cheat_invincibility = not game.cheat_invincibility
+                elif event.key == pygame.K_f:
+                    game.cheat_ghost_freeze = not game.cheat_ghost_freeze
         if frame_count % MOVE_EVERY == 0:
             status = game.update(pending_direction)
             if status in ("lost", "won", "time is up"):
