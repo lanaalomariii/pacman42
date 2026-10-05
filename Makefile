@@ -12,7 +12,8 @@ debug:
 	python3 -m pdb pac-man.py config.json
 
 clean:
-	rm -rf __pycache__ .mypy_cache .pytest_cache
+	find . -type d -name "__pycache__" -exec rm -rf {} +
+	rm -rf .mypy_cache .pytest_cache
 	rm -rf venv
 lint:
 	flake8 . --exclude=venv
