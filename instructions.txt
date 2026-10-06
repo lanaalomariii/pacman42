@@ -5,6 +5,12 @@ Controls:
     Pause: the game: P or ESC
     ESC/Space/Enter: Return to menu
 
+Cheats:
+    I: Toggle invincibility
+    F: Freeze ghosts
+    N: skip to next level
+    E: Gain an extra life 
+
 Configuration:
 Edit config.json to change:
     highscore_filename
