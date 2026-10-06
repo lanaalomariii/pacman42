@@ -348,9 +348,13 @@ def pause_menu(screen: pygame.Surface) -> str:
 
 def draw_hud(screen: pygame.Surface, game: Game,
              font: pygame.font.Font) -> None:
+    level_text = font.render(f"Level: {game.level_manager.current_level
+                             + 1}", True, YELLOW)
+    level_rect = level_text.get_rect(topleft=(5, 5))
+    screen.blit(level_text, level_rect)
     score_text = font.render(f"Score: {game.score.get_score()}", True,
                              (255, 255, 255))
-    score_rect = score_text.get_rect(topleft=(5, 5))
+    score_rect = score_text.get_rect(topleft=(5, 110))
     screen.blit(score_text, score_rect)
     lives_text = font.render(f"Lives: {game.player.lives}", True,
                              (255, 255, 255))

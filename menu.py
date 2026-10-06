@@ -53,7 +53,7 @@ def draw_menu(screen: pygame.Surface,
         choice: the index of the currently selected button
     """
     screen.blit(background, (0, 0))
-    title = title_font.render("PAC-MAN", True, YELLOW)
+    title = title_font.render("GUMBALL", True, YELLOW)
     screen.blit(title, title.get_rect(center=(WIDTH // 2, 88)))
     for i, label in enumerate(LABELS):
         rect = button_rect(i)

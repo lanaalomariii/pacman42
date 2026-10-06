@@ -1,4 +1,4 @@
-.PHONY: install run debug clean lint
+.PHONY: install run debug clean lint package pclean
 
 install:
 	python3 -m venv venv
