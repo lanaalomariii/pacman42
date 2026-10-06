@@ -6,14 +6,17 @@ Controls:
     ESC/Space/Enter: Return to menu
 
 Configuration:
-
 Edit config.json to change:
     highscore_filename
     number of lives
     points_per_pacgum
-    points_per_super_pacgum,
+    points_per_super_pacgum
     points_per_ghost
     level_max_time
     maze sizes
 
-
+Options:
+    start game: start playing
+    highscores: show top scores
+    instructions: show instructions
+    exit: quit the game
