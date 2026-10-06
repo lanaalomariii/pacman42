@@ -21,6 +21,7 @@ INSTRUCTIONS = [
         "Eat all pacgums to win the level",
         "Super-pacgums make ghosts edible",
         "You have 3 lives",
+        "Use p oe ESC to pause the game",
         "Avoid ghosts unless they are edible",
         "Touch a non edible ghost costs one life",
         "Eating an edible ghost gives bonus point",
