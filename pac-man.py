@@ -49,9 +49,12 @@ def main() -> None:
     while True:
         action = menu.run_menu(screen, background)
         if action == 0:
-            game_screen.run_game(screen, config)
+            if game_screen.run_game(screen, config) == "quit":
+                break
         elif action == 1:
-            game_screen.highscore_menu(screen)
+            if game_screen.highscore_menu(
+                    screen, config["highscore_filename"]) == "quit":
+                break
         elif action == 2:
             menu.run_instructions(screen, background)
         else:

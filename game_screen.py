@@ -367,10 +367,10 @@ def draw_hud(screen: pygame.Surface, game: Game,
     screen.blit(time_text, time_rect)
 
 
-def highscore_menu(screen: pygame.Surface) -> str:
+def highscore_menu(screen: pygame.Surface, highscore_file: str) -> str:
     clock = pygame.time.Clock()
     pause_font = pygame.font.Font("graphics/font.ttf", 30)
-    scores = load_highscores("highscores.json")
+    scores = load_highscores(highscore_file)
     while True:
         clock.tick(FPS)
         for event in pygame.event.get():
