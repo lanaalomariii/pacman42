@@ -43,6 +43,8 @@ python3 pac-man.py path_to_custom_config.json
 - `make debug` runs the game under Python debugger (pdb).
 - `make lint` runs flake8 and mypy checks.
 - `make clean` removes caches and the virtual environment.
+- `make package`  creates the game executable using using PyInstaller and copies the required files.
+- `make pclean` removes the build files **dist/** directory, and PyInstaller spec files.
 
 ### Controls
 - Move: Arrow keys or WASD.

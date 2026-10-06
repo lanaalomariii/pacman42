@@ -2,7 +2,7 @@
 
 install:
 	python3 -m venv venv
-	venv/bin/pip install mypy flake8 pygame
+	venv/bin/pip install mypy flake8 pygame pyinstaller
 	venv/bin/pip install  mazegenerator-2.1.0-py3-none-any.whl
 
 run:
