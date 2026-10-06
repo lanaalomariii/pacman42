@@ -61,7 +61,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     if getattr(sys, "frozen", False):
-        base_path = sys._MEIPASS
+        base_path = os.path.dirname(sys.executable)
     else:
         base_path = os.path.dirname(os.path.abspath(__file__))
     os.chdir(base_path)
