@@ -13,7 +13,7 @@ The project was divided between us, the work was shared fairly.
 - Highscores system.
 - Maze adapter.
 - Player, Ghosts.
-- Level structure.
+- Level structure and Game class.
 - Pacgums, Super-pacgums and Scoring.
 
 ### fadarwis
