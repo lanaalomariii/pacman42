@@ -147,7 +147,6 @@ class Ghost:
                     self.state = GhostState.EDIBLE
                 else:
                     self.state = GhostState.NORMAL
-                self.chase(position)
 
     def set_edible(self) -> None:
         """set a ghost as edible"""

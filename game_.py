@@ -102,9 +102,15 @@ class Game:
 
     def move_ghosts(self) -> None:
         """Move every ghost unless the ghost freeze cheat is active"""
-        if self.cheat_ghost_freeze:
-            return
         for ghost in self.ghosts:
+            if ghost.state == GhostState.EDIBLE:
+                ghost.update_edible()
+            if ghost.state == GhostState.RESPAWNING:
+                 ghost.move_ghost((self.player.x, self.player.y),
+                             self.player.direction)
+                 continue
+            if self.cheat_ghost_freeze:
+                continue
             ghost.move_ghost((self.player.x, self.player.y),
                              self.player.direction)
 
