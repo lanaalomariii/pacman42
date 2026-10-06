@@ -1,5 +1,6 @@
 import pygame
 from game_ import Game
+from game.maze import MazeError
 from game.ghost import Ghost, GhostState, GhostType
 from data.highscores import (MAX_NAME_LEN, load_highscores,
                              add_score, save_highscores)
@@ -402,13 +403,18 @@ def run_game(screen: pygame.Surface, config: dict) -> str:
     Returns:
         The state after the game ends
     """
-    game = Game(levels=config["levels"],
-                pacgum_count=config["pacgum"],
-                level_max_time=config["level_max_time"],
-                lives=config["lives"],
-                points_per_pacgum=config["points_per_pacgum"],
-                points_per_super_pacgum=config["points_per_super_pacgum"],
-                points_per_ghost=config["points_per_ghost"])
+    try:
+
+        game = Game(levels=config["levels"],
+                    pacgum_count=config["pacgum"],
+                    level_max_time=config["level_max_time"],
+                    lives=config["lives"],
+                    points_per_pacgum=config["points_per_pacgum"],
+                    points_per_super_pacgum=config["points_per_super_pacgum"],
+                    points_per_ghost=config["points_per_ghost"])
+    except MazeError as e:
+        print(f"Error: could not start the game: {e}")
+        return "menu"
     HIGHSCORE_FILE = config["highscore_filename"]
     clock = pygame.time.Clock()
     player_original, ghost_original = load_images()
@@ -434,7 +440,9 @@ def run_game(screen: pygame.Surface, config: dict) -> str:
                     game.pause()
                     result = pause_menu(screen)
                     if result == "Return to Menu":
-                        return "menu"
+                        return "menu" 
+                    if result == "quit":
+                        return "quit"
                     game.resume()
                 elif event.key == pygame.K_i:
                     game.cheat_invincibility = not game.cheat_invincibility
@@ -445,7 +453,11 @@ def run_game(screen: pygame.Surface, config: dict) -> str:
                 elif event.key == pygame.K_e:
                     game.add_extra_life()
         if frame_count % MOVE_EVERY == 0:
-            status = game.update(pending_direction)
+            try:
+                status = game.update(pending_direction)
+            except MazeError as e:
+                print(f"maze generation failed: {e}")
+                return "menu"
             if status in ("lost", "won", "time is up"):
                 final_score = game.score.get_score()
                 name = ask_name(screen, status, final_score)
