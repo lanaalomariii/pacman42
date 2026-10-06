@@ -346,20 +346,19 @@ def pause_menu(screen: pygame.Surface) -> str:
         pygame.display.update()
 
 
-def draw_hud(screen: pygame.Surface, game: Game, font: pygame.font.Font) -> None:
+def draw_hud(screen: pygame.Surface, game: Game,
+             font: pygame.font.Font) -> None:
     score_text = font.render(f"Score: {game.score.get_score()}", True,
-    (255, 255, 255))
+                             (255, 255, 255))
     score_rect = score_text.get_rect(topleft=(5, 5))
     screen.blit(score_text, score_rect)
-
     lives_text = font.render(f"Lives: {game.player.lives}", True,
-                                 (255, 255, 255)
-                            )
+                             (255, 255, 255))
     lives_rect = lives_text.get_rect(topleft=(5, 40))
     screen.blit(lives_text, lives_rect)
     time_left = int(game.level_manager.time_remaining())
     time_text = font.render(f"Time: {time_left}", True,
-    (255, 255, 255))
+                            (255, 255, 255))
     time_rect = time_text.get_rect(topleft=(5, 75))
     screen.blit(time_text, time_rect)
 
@@ -457,7 +456,7 @@ def run_game(screen: pygame.Surface, config: dict) -> str:
                     player_original, ghost_original, cell_size)
             last_cell_size = cell_size
         if (maze_surface is None
-            or maze_level != game.level_manager.current_level):
+                or maze_level != game.level_manager.current_level):
             maze_surface = pygame.Surface((width, height))
             maze_surface.fill(BACKGROUND)
             draw_maze(maze_surface, game, cell_size, offset_x, offset_y)

@@ -25,8 +25,8 @@ def main() -> None:
                 if not stripped or stripped.startswith("#"):
                     continue
                 json_lines.append(stripped)
-            json_lines = "\n".join(json_lines)
-            config = json.loads(json_lines)
+            json_text = "\n".join(json_lines)
+            config = json.loads(json_text)
             if not isinstance(config, dict):
                 print("Error: config file must contain a valid JSON Dict..")
                 sys.exit(1)

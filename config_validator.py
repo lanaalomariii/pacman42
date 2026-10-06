@@ -1,4 +1,4 @@
-from typing import Dict, List, Any
+from typing import Dict, List, Any, cast
 
 DEFAULT_LEVEL_COUNT = 10
 DEFAULT_WIDTH = 15
@@ -22,7 +22,7 @@ DEFAULTS: Dict[str, Any] = {
     }
 
 
-def validate_positive_int(config: dict, key: str, default: int) -> int:
+def validate_positive_int(config: dict, key: str, default: int) -> Any:
     value = config.get(key, default)
     if (not isinstance(value, int) or value <= 0) or (isinstance(value, bool)):
         print(f"Invalid value for key {key}, setting default...")
@@ -65,7 +65,7 @@ def validate_levels(prev_levels: Any) -> List[Dict[str, int]]:
                         level, "height", DEFAULTS["levels"][i]["height"])
                 prev_levels[i]["seed"] = validate_positive_int(
                         level, "seed", DEFAULTS["levels"][i]["seed"])
-    return prev_levels
+    return cast(List[Dict[str, int]], prev_levels)
 
 
 def validate_config(config: dict) -> dict:
