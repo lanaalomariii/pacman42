@@ -18,3 +18,10 @@ clean:
 lint:
 	flake8 . --exclude=venv
 	mypy . --warn-return-any --warn-unused-ignores --ignore-missing-imports --disallow-untyped-defs --check-untyped-defs
+
+package:
+	pyinstaller --onefile pac-man.py
+	cp -r graphics dist/
+	cp config.json dist/
+pclean:
+	rm -rf build dist *.spec
