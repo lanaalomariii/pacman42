@@ -11,7 +11,7 @@ END_IMAGES = {
         "lost": "graphics/lose.png",
         "time is up": "graphics/time_up.png"}
 FPS = 60
-MOVE_EVERY = 7
+MOVE_EVERY = 8
 
 GHOST_DRAW_OFFSET = {
     GhostType.BLINKY: (0, 0),
@@ -129,7 +129,8 @@ def scale_images(player_image: pygame.Surface,
     return player_images, ghost_images
 
 
-def ghost_image(ghost: Ghost, ghost_images: dict
+def ghost_image(ghost: Ghost,
+                ghost_images: dict[GhostType, pygame.Surface]
                 ) -> pygame.Surface:
     """Return the image of a ghost tinted according to its state
     Args:
@@ -386,7 +387,7 @@ def highscore_menu(screen: pygame.Surface, highscore_file: str) -> str:
         draw_centered_text(screen, "High Scores", 70, 100, YELLOW)
         for i, entry in enumerate(scores):
             y = 250 + i * 40
-            name_text = pause_font.render(entry["name"], True, LIGHT)
+            name_text = pause_font.render(str(entry["name"]), True, LIGHT)
             name_rect = name_text.get_rect(topleft=(400, y))
             screen.blit(name_text, name_rect)
             score_text = pause_font.render(str(entry["score"]), True, LIGHT)
@@ -440,7 +441,7 @@ def run_game(screen: pygame.Surface, config: dict) -> str:
                     game.pause()
                     result = pause_menu(screen)
                     if result == "Return to Menu":
-                        return "menu" 
+                        return "menu"
                     if result == "quit":
                         return "quit"
                     game.resume()

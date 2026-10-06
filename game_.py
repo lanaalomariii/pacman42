@@ -106,9 +106,9 @@ class Game:
             if ghost.state == GhostState.EDIBLE:
                 ghost.update_edible()
             if ghost.state == GhostState.RESPAWNING:
-                 ghost.move_ghost((self.player.x, self.player.y),
-                             self.player.direction)
-                 continue
+                ghost.move_ghost(
+                        (self.player.x, self.player.y), self.player.direction)
+                continue
             if self.cheat_ghost_freeze:
                 continue
             ghost.move_ghost((self.player.x, self.player.y),
