@@ -23,5 +23,6 @@ package:
 	pyinstaller --onefile pac-man.py
 	cp -r graphics dist/
 	cp config.json dist/
+	cp instructions.txt dist/
 pclean:
 	rm -rf build dist *.spec
