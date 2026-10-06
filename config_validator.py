@@ -8,7 +8,7 @@ DEFAULT_SEED = 42
 DEFAULTS: Dict[str, Any] = {
     "highscore_filename": "highscores.json",
     "lives": 3,
-    "pacgum": 42,
+    "pacgum": 150,
     "points_per_pacgum": 10,
     "points_per_super_pacgum": 50,
     "points_per_ghost": 200,

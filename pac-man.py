@@ -72,3 +72,6 @@ if __name__ == "__main__":
         main()
     except KeyboardInterrupt:
         print("\nProgram Interrupted. Exiting..")
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        sys.exit(1)

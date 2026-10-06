@@ -450,7 +450,11 @@ def run_game(screen: pygame.Surface, config: dict) -> str:
                 elif event.key == pygame.K_f:
                     game.cheat_ghost_freeze = not game.cheat_ghost_freeze
                 elif event.key == pygame.K_n:
-                    game.skip_level()
+                    try:
+                        game.skip_level()
+                    except MazeError as e:
+                        print(f"maze generation failed: {e}")
+                        return "menu"
                 elif event.key == pygame.K_e:
                     game.add_extra_life()
         if frame_count % MOVE_EVERY == 0:
