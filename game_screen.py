@@ -287,7 +287,8 @@ def ask_name(screen: pygame.Surface, status: str, score: int) -> None | str:
     """
     clock = pygame.time.Clock()
     name = ""
-    background = pygame.image.load(END_IMAGES[status]).convert()
+    background = pygame.image.load(END_IMAGES[status])
+    background.set_alpha(150)
     box = pygame.Rect(440, 530, 400, 70)
     while True:
         clock.tick(FPS)
@@ -310,8 +311,9 @@ def ask_name(screen: pygame.Surface, status: str, score: int) -> None | str:
                     ):
                 name += event.unicode
 
+        screen.fill((0, 0, 0))
         screen.blit(background, (0, 0))
-        draw_centered_text(screen, f"Score: {score}", 48, 440, YELLOW)
+        draw_centered_text(screen, f"Score: {score}", 48, 400, LIGHT)
         draw_centered_text(screen, "Enter your name", 30, 497, LIGHT)
         pygame.draw.rect(screen, (0, 0, 0), box, border_radius=12)
         pygame.draw.rect(screen, YELLOW, box, 3, border_radius=12)
@@ -410,10 +412,10 @@ def highscore_menu(screen: pygame.Surface, highscore_file: str) -> str:
             if event.type == pygame.KEYDOWN:
                 if event.key in (pygame.K_ESCAPE, pygame.K_RETURN):
                     return "menu"
-        screen.fill((0, 0, 0))
+        screen.fill((173, 216, 230))
         panel = pygame.Rect(180, 160, 920, 530)
-        pygame.draw.rect(screen, YELLOW, panel, width=3, border_radius=20)
-        draw_centered_text(screen, "High Scores", 70, 100, YELLOW)
+        pygame.draw.rect(screen, (0, 0, 139), panel, width=3, border_radius=20)
+        draw_centered_text(screen, "High Scores", 70, 100, (0, 0, 139))
         for i, entry in enumerate(scores):
             y = 250 + i * 40
             name_text = pause_font.render(str(entry["name"]), True, LIGHT)

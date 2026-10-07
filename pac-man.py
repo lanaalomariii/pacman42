@@ -47,7 +47,7 @@ def main() -> None:
         sys.exit(1)
     try:
         screen = pygame.display.set_mode((menu.WIDTH, menu.HEIGHT))
-        pygame.display.set_caption("Pacman")
+        pygame.display.set_caption("Gumball maze")
         background = pygame.image.load("graphics/BG.png").convert()
     except (pygame.error, FileNotFoundError) as e:
         print(f"Error: cannot load game assets: {e}")
