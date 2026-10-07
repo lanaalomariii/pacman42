@@ -8,20 +8,15 @@ from config_validator import validate_config
 
 
 def main() -> None:
-    """Load and validate the config, then run the game's main menu loop.
-
-    Resolves the config file path (falling back to "config.json" if
-    none is given), parses the JSON (ignoring comment lines),
-    validates it, initializes pygame, and loops through the main
-    menu until the player chooses to quit.
+    """Load and validate the config, then run the game's main menu.
+    Reads the config file from the command-line argument, ignores blank
+    and comment lines, validates the configuration, initializes Pygame,
+    and runs the main menu until the player quits.
     """
-    if len(sys.argv) == 1:
-        config_path = "config.json"
-    elif len(sys.argv) == 2:
-        config_path = sys.argv[1]
-    else:
+    if len(sys.argv) != 2:
         print("Usage: python3 pacman.py <config.json>...")
         sys.exit(1)
+    config_path = sys.argv[1]
     try:
         with open(config_path, "r") as f:
             lines = f.read()
@@ -38,13 +33,15 @@ def main() -> None:
                 print("Error: config file must contain a valid JSON Dict..")
                 sys.exit(1)
             config = validate_config(config)
-            pygame.init()
     except json.JSONDecodeError as e:
-        print("Invalid JSON syntax:", e)
-        sys.exit(1)
+        print("Invalid JSON syntax Using default configuration.", e)
+        config = validate_config({})
     except FileNotFoundError:
         print("Error: file not found")
         sys.exit(1)
+
+    pygame.init()
+
     try:
         screen = pygame.display.set_mode((menu.WIDTH, menu.HEIGHT))
         pygame.display.set_caption("Gumball maze")
