@@ -25,4 +25,4 @@ package:
 	cp config.json dist/
 	cp instructions.txt dist/
 pclean:
-	rm -rf build dist *.spec
+	rm -rf build dist
