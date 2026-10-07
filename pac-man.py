@@ -8,6 +8,13 @@ from config_validator import validate_config
 
 
 def main() -> None:
+    """Load and validate the config, then run the game's main menu loop.
+
+    Resolves the config file path (falling back to "config.json" if
+    none is given), parses the JSON (ignoring comment lines),
+    validates it, initializes pygame, and loops through the main
+    menu until the player chooses to quit.
+    """
     if len(sys.argv) == 1:
         config_path = "config.json"
     elif len(sys.argv) == 2:

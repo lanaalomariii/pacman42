@@ -322,6 +322,16 @@ def ask_name(screen: pygame.Surface, status: str, score: int) -> None | str:
 
 
 def pause_menu(screen: pygame.Surface) -> str:
+    """Run the pause menu, letting the player
+        resume or return to the main menu.
+
+       Args:
+       screen: the surface to draw the pause menu on.
+
+      Returns:
+      The selected option as a string: "Resume", "Return to Menu",
+      or "quit" if the player closed the window.
+"""
     options = ["Resume", "Return to Menu"]
     selected = 0
     clock = pygame.time.Clock()
@@ -350,6 +360,14 @@ def pause_menu(screen: pygame.Surface) -> str:
 
 def draw_hud(screen: pygame.Surface, game: Game,
              font: pygame.font.Font) -> None:
+    """Draw the in-game HUD: current level, score, lives, and time remaining.
+
+    Args:
+    screen: the surface to draw the HUD on.
+    game: the current Game instance, used to read level, score,
+    lives, and time-remaining values.
+    font: the font used to render the HUD text.
+    """
     level_text = font.render(f"Level: {game.level_manager.current_level
                              + 1}", True, (255, 255, 255))
     level_rect = level_text.get_rect(topleft=(5, 5))
@@ -370,6 +388,17 @@ def draw_hud(screen: pygame.Surface, game: Game,
 
 
 def highscore_menu(screen: pygame.Surface, highscore_file: str) -> str:
+    """Display the Top 10 highscores and wait for
+    the player to dismiss the screen.
+
+    Args:
+    screen: the surface to draw the highscores screen on.
+    highscore_file: path to the JSON file storing saved highscores.
+
+    Returns:
+    "menu" once the player presses Escape or Enter, or "quit" if
+    they closed the window.
+"""
     clock = pygame.time.Clock()
     pause_font = pygame.font.Font("graphics/font.ttf", 30)
     scores = load_highscores(highscore_file)

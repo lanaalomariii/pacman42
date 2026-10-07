@@ -6,6 +6,7 @@ WIDTH, HEIGHT = 1280, 720
 YELLOW = (255, 221, 0)
 WHITE = (235, 243, 255)
 DARK = (15, 15, 30)
+SKY = (135, 206, 235)
 DARK_BLUE = (15, 25, 70)
 LABELS = ["START GAME", "HIGHSCORES", "INSTRUCTIONS", "EXIT"]
 BUTTON_W = 250
@@ -54,8 +55,12 @@ def draw_menu(screen: pygame.Surface,
         choice: the index of the currently selected button
     """
     screen.blit(background, (0, 0))
+    titlet = title_font.render("THE", True, YELLOW)
+    screen.blit(titlet, titlet.get_rect(center=(WIDTH // 2, 78)))
     title = title_font.render("GUMBALL", True, YELLOW)
-    screen.blit(title, title.get_rect(center=(WIDTH // 2, 88)))
+    screen.blit(title, title.get_rect(center=(WIDTH // 2, 180)))
+    titlem = title_font.render("MAZE", True, YELLOW)
+    screen.blit(titlem, titlem.get_rect(center=(WIDTH // 2, 282)))
     for i, label in enumerate(LABELS):
         rect = button_rect(i)
         selected = i == choice

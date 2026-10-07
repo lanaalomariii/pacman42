@@ -23,6 +23,15 @@ DEFAULTS: Dict[str, Any] = {
 
 
 def validate_positive_int(config: dict, key: str, default: int) -> Any:
+    """Validate that a config value is a positive integer.
+
+    Args:
+    config: the dict to look up the value in
+    key: the key to look up and validate
+    default: the fallback value to use if the key is missing or invalid
+
+    Returns: either validated value, or default if not valid
+   """
     value = config.get(key, default)
     if (not isinstance(value, int) or value <= 0) or (isinstance(value, bool)):
         print(f"Invalid value for key {key}, setting default...")
@@ -31,6 +40,17 @@ def validate_positive_int(config: dict, key: str, default: int) -> Any:
 
 
 def validate_levels(prev_levels: Any) -> List[Dict[str, int]]:
+    """Validates a list of level configurations, corrects bad
+    entries and bad fields within valid entries
+
+    Args:
+    prev_levels: raw levels value from the config
+
+
+    Returns:
+    A list of validated level dictionaries, each containing valid width,
+    height, and seed values
+    """
     if not prev_levels:
         print("Your list of levels is empty, setting default...")
         prev_levels = DEFAULTS["levels"]
@@ -69,6 +89,20 @@ def validate_levels(prev_levels: Any) -> List[Dict[str, int]]:
 
 
 def validate_config(config: dict) -> dict:
+    """Validate and sanitize a raw config dictionary.
+
+    Filters out unknown keys, lowercases valid keys, and validates
+    highscore_filename, the six positive-int keys, and levels,
+    falling back to safe defaults where needed.
+
+    Args:
+    config: the raw dict to validate, as parsed from the config file.
+
+    Returns:
+    A new dict containing only valid keys, with every value
+    validated and clamped to a safe default where necessary.
+"""
+
     valid_keys = ["highscore_filename", "lives", "pacgum",
                   "points_per_pacgum", "points_per_super_pacgum",
                   "points_per_ghost", "level_max_time", "levels"]
