@@ -27,6 +27,7 @@ We used to-do list to track tasks, split between the two of us from day one (see
 
 ### Cheat Mode & Deployment (2/10/2026 - 6/10/2026)
 - Cheat mode logic (invincibility, freeze, extra lives, level skip).
+- Deploy on Itch.io.
 
 ## Team Collaboration
 
