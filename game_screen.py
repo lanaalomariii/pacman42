@@ -313,10 +313,13 @@ def ask_name(screen: pygame.Surface, status: str, score: int) -> None | str:
 
         screen.fill((0, 0, 0))
         screen.blit(background, (0, 0))
-        draw_centered_text(screen, f"Score: {score}", 48, 400, LIGHT)
+        if status == "won":
+            draw_centered_text(screen, "HURRAY!", 72, 250, LIGHT)
+            draw_centered_text(screen, "YOU'VE WON!", 72, 370, LIGHT)
+        draw_centered_text(screen, f"Score: {score}", 48, 440, YELLOW)
         draw_centered_text(screen, "Enter your name", 30, 497, LIGHT)
-        pygame.draw.rect(screen, (0, 0, 0), box, border_radius=12)
-        pygame.draw.rect(screen, YELLOW, box, 3, border_radius=12)
+        pygame.draw.rect(screen, (11, 66, 119), box, border_radius=12)
+        pygame.draw.rect(screen, LIGHT, box, 3, border_radius=12)
 
         draw_centered_text(screen, name, 34, box.centery)
         draw_centered_text(screen, "Press Enter to continue", 24, 650, LIGHT)
@@ -418,10 +421,12 @@ def highscore_menu(screen: pygame.Surface, highscore_file: str) -> str:
         draw_centered_text(screen, "High Scores", 70, 100, (0, 0, 139))
         for i, entry in enumerate(scores):
             y = 250 + i * 40
-            name_text = pause_font.render(str(entry["name"]), True, LIGHT)
+            name_text = pause_font.render(str(entry["name"]),
+                                          True, (0, 0, 139))
             name_rect = name_text.get_rect(topleft=(400, y))
             screen.blit(name_text, name_rect)
-            score_text = pause_font.render(str(entry["score"]), True, LIGHT)
+            score_text = pause_font.render(str(entry["score"]),
+                                           True, (0, 0, 139))
             score_rect = score_text.get_rect(topright=(800, y))
             screen.blit(score_text, score_rect)
         pygame.display.update()
