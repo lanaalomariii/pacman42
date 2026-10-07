@@ -4,6 +4,7 @@
 
 ## Description
 This project is a Pac-Man-inspired game built in Python using object-oriented programming and Pygame. The game features a custom maze generated using the `A-Maze-ing` package assigned to us, used as-is through an adapter (`Maze` class) that exposes the operations the rest of the game needs, such as checking walls and computing neighbors.
+
 Four ghosts, each with its own behaviour and targeting strategy:
 
 **Blinky:** Chases Pac-Man's current position.
@@ -14,7 +15,10 @@ Four ghosts, each with its own behaviour and targeting strategy:
 
 **Clyde:** Chases Pac-Man when far away and returns to his starting position when he gets too close.
 
+Each character (the player and all four ghosts) uses custom artwork rather than the original Pac-Man, though their behavior follows the classic game's logic.
+
 The game includes multiple levels, scoring, lives, a time limit, highscores and a configuration system.
+
 The goal is to collect all pacgums and super-pacgums across at least 10 levels without losing all lives or running out of time.
 
 ## Instructions
@@ -69,7 +73,7 @@ The game is configured through a JSON file passed as a command-line argument. Li
 | `level_max_time` | Time limit per level, in seconds | `90` |
 | `levels` | List of 10 level configs, each with `width`, `height`, `seed` | see `config.json` |
 
-The number of pacgums increases slightly with each level (`pacgum_count + current_level * 5`), while the maze size also increases with each level gradually raising the difficulty.
+The number of pacgums increases slightly with each level (`pacgum_count + current_level * 10`), while the maze size also increases with each level gradually raising the difficulty.
 
 ## Maze Generation
 
