@@ -33,7 +33,7 @@ class LevelManager:
         Returns:
             the pacgum count scaled by current level index
         """
-        return self.pacgum_count + (self.current_level * 5)
+        return self.pacgum_count + (self.current_level * 10)
 
     def build_maze_level(self) -> Maze:
         """Build the maze for a level
